@@ -12,6 +12,6 @@ Please see the client end of this project on [Github](https://github.com/mengqia
 - Mongoose
 
 ### Contributors
-Qiansha Meng
-Ying Fang
-Zihan Wang
+- Qiansha Meng
+- Ying Fang
+- Zihan Wang
