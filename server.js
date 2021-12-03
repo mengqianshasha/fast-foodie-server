@@ -81,6 +81,6 @@ app.get("/api/restaurants/:id", (req, res) => {
 // });
 
 
-
+require('./services/auto-completion-service')(app);
 
 app.listen(process.env.PORT || 8000);
