@@ -35,22 +35,20 @@ app.get("/api/restaurants", (req, res) => {
     params : {
       "location": "seattle, WA"
     }
-  }).then(businesses => {
-    res.json(businesses.data.businesses[0])
+  }).then(result => {
+    res.json(result.data.businesses)
   })
 })
 
 app.get("/api/restaurants/:id", (req, res) => {
   const id = req.params.id;
-  console.log(id)
 
   axios.get(`http://api.yelp.com/v3/businesses/${id}`, {
     headers: {
       "Authorization": `Bearer ${process.env.YELP_API_KEY}`
     }
-    
-  }).then(businesses => {
-    res.json(businesses.data)
+  }).then(business => {
+    res.json(business.data)
   })
 })
 
