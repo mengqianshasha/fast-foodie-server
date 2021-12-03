@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const CONSTANTS = require('./CONSTS');
-const sesssion = require('express-session');
+const session = require('express-session');
 
 
 const axios = require('axios');
@@ -56,7 +56,7 @@ const mongoose = require('mongoose');
 mongoose.connect(CONSTANTS.MONGODB_URL);
 
 
-require('./users/user-controller')(app);
+require('./services/login-service')(app);
 
 
 

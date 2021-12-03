@@ -1,4 +1,4 @@
-const userDao = require('./user-dao');
+const userDao = require('../data/db/customer/customer-dao');
 
 module.exports = (app) => {
   const findAllUsers = (req, res) =>
