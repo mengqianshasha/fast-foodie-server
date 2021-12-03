@@ -1,16 +1,16 @@
-const {getYelpAutoCompletion} = require("../data/api/auto-completion-api");
+const {getYelpAutoCompletion} = require("../data/api/yelp-api");
 
 
 module.exports = (app) => {
     const getAutoCompletionList = (req, res) => {
-        console.log("here!");
-        getYelpAutoCompletion(req.params.term)
-            .then(response=>{
-                res.json(response);
-            })
-            .catch(()=>{
-                res.sendStatus(404);
-            })
+            getYelpAutoCompletion(req.params.term)
+                .then(response=>{
+                    res.json(response.data.terms);
+                })
+                .catch((e)=>{
+                    res.sendStatus(404);
+                })
+
     }
 
     app.get("/api/autocomplete/restaurant/:term", getAutoCompletionList);
