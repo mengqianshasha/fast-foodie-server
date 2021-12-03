@@ -3,4 +3,4 @@ const MONGODB_URL = 'mongodb+srv://fast-foodie:fast-foodie@cluster0.07hvq.mongod
 
 module.exports = {
     CLIENT_URL, MONGODB_URL
-}
+};

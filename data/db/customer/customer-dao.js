@@ -1,4 +1,4 @@
-const userModel = require('./user-model');
+const userModel = require('./customer-model');
 
 const findAllUsers = () =>
   userModel.find();

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const userSchema = mongoose.Schema({
+const customerSchema = mongoose.Schema({
   username: String,
   password: String,
   email: String,
@@ -22,4 +22,4 @@ const userSchema = mongoose.Schema({
   }
 }, {collection: 'users'});
 
-module.exports = userSchema;
+module.exports = customerSchema;
