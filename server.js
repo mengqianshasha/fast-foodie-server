@@ -65,6 +65,7 @@ app.get("/hello", (req, res) => {
 })
 
 
+require('./services/restaurant-service')(app);
 require('./services/search-service')(app);
 require('./services/auto-completion-service')(app);
 
