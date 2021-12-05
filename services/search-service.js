@@ -2,6 +2,7 @@ const {getYelpSearch} = require("../data/api/yelp-api");
 
 module.exports = (app) => {
     const searchRestaurants = (req, res) => {
+
         getYelpSearch(req.params.location, req.query)
             .then(response=>{
                 res.json(response.data['businesses']);

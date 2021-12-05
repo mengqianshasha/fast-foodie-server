@@ -7,7 +7,7 @@ const getYelpAutoCompletion = (term) => {
             "Authorization": `Bearer ${process.env.YELP_API_KEY}`
         },
         params : {
-            "text": term
+            "text": term,
         }
     })
 }

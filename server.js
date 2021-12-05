@@ -20,12 +20,10 @@ app.use(function (req, res, next) {
     next();
 });
 
-
 /************************************ Configure CORS************************************/
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
 
 // swagger
 
@@ -48,13 +46,11 @@ const specs = swaggerJsdoc(options);
 const swaggerUi = require('swagger-ui-express');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-
-
-
-
 app.use(session({
                     secret: 'keyboard cat',
-                    cookie: {}
+                    cookie: {},
+                    resave: false,
+                    saveUninitialized: true
                 }));
 
 const mongoose = require('mongoose');
