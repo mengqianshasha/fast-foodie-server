@@ -49,7 +49,8 @@ app.use(function(req, res, next) {
 
 app.use(session({
     secret: 'keyboard cat',
-    cookie: {}
+    resave: false,
+    saveUninitialized: true
   }));
 
 const mongoose = require('mongoose');
