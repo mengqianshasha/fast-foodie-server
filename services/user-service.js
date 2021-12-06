@@ -1,4 +1,4 @@
-const userDao = require('../data/db/customer/customer-dao');
+const userDao = require('../data/db/user/user-dao');
 
 module.exports = (app) => {
   const findAllUsers = (req, res) =>
@@ -17,6 +17,7 @@ module.exports = (app) => {
     userDao.updateUser(req.body)
       .then(status => req.send(status));
 
+  // TODO: Add notifications, activities, reviews, bookmarks into profile later
   const login = (req, res) => {
     userDao.findByUsernameAndPassword(req.body)
       .then(user => {
@@ -27,6 +28,17 @@ module.exports = (app) => {
         }
         res.sendStatus(403);
       })
+  }
+
+  const verifyUsername = (req, res) => {
+      userDao.findByUsername(req.body)
+          .then(user => {
+              if(user) {
+                  res.sendStatus(404);
+              } else {
+                  res.sendStatus(200);
+              }
+          })
   }
 
   const register = (req, res) => {
@@ -54,8 +66,9 @@ module.exports = (app) => {
   app.post('/api/register', register);
   app.post('/api/profile', profile);
   app.post('/api/logout', logout);
-  app.put('/api/users', updateUser);
+  app.put('/api/editProfile', updateUser);
   app.delete('/api/users/:userId', deleteUser);
   app.get('/api/users', findAllUsers);
   app.get('/api/users/:userId', findUserById);
+  app.post('/api/register/verify', verifyUsername);
 };

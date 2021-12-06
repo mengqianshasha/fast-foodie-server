@@ -1,0 +1,233 @@
+[
+  {
+    "_id": "123",
+    "role": "customer",
+    "username": "fangying1101@gmail.com",
+    "password": "123ABC",
+    "firstName": "Fangying",
+    "lastName": "Li",
+    "image_url": "/images/ProfilePage/avatar_img.jpg",
+    "location": "Boston, MA",
+    "birthday": "2021-11-1",
+    "dateJoined": "2019-9-1",
+    "email": "fangying1101@gmail.com",
+    "reviewsCount": 88,
+    "reviews": [],
+    "followingCount": 2,
+    "followings": [
+      "234",
+      "345"
+    ],
+    "followersCount": 3,
+    "followers": [
+      "345",
+      "456",
+      "567"
+    ],
+    "bookmarksCount": 1,
+    "bookmarksList": [
+      {
+        "id": "Rv4NgRl-wkMNPNdqXNSGBg",
+        "name": "Shake Shack",
+        "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+        "location": {
+          "address1": "1 Old Fulton St",
+          "address2": "",
+          "address3": "",
+          "city": "Brooklyn",
+          "zip_code": "11201",
+          "country": "US",
+          "state": "NY",
+          "display_address": [
+            "1 Old Fulton St",
+            "Brooklyn, NY 11201"
+          ],
+          "cross_streets": ""
+        },
+        "rating": 3.65,
+        "review_count": 369,
+        "categories": [
+          {
+            "alias": "tradamerican",
+            "title": "American (Traditional)"
+          },
+          {
+            "alias": "icecream",
+            "title": "Ice Cream & Frozen Yogurt"
+          }
+        ],
+        "price": "$$"
+      }
+    ],
+
+    "visibility": {
+      "location": true,
+      "birthday": true,
+      "bookmarks": true
+    }
+  },
+  {
+    "_id": "234",
+    "role": "customer",
+    "username": "mike@123.com",
+    "password": "456ABC",
+    "firstName": "Mike",
+    "lastName": "Shah",
+    "image_url": "https://cdn.pixabay.com/photo/2014/11/13/06/12/boy-529067_960_720.jpg",
+    "location": "Los Angelos, CA",
+    "birthday": "1969-11-11",
+    "dateJoined": "2019-12-30",
+    "email": "mike@123.com",
+    "reviewsCount": 12,
+    "reviews": [],
+    "followingCount": 0,
+    "followingList": [],
+    "followersCount": 2,
+    "followersList": [
+      123,
+      456
+    ],
+    "bookmarksCount": 0,
+    "bookmarksList": [],
+    "visibility": {
+      "location": true,
+      "birthday": true,
+      "bookmarks": true
+    }
+  },
+  {
+    "_id": "345",
+    "role": "customer",
+    "username": "mike2@123.com",
+    "password": "789ABC",
+    "firstName": "Mike2",
+    "lastName": "Shah",
+    "image_url": "https://cdn.pixabay.com/photo/2014/11/13/06/12/boy-529067_960_720.jpg",
+    "location": "Los Angelos, CA",
+    "birthday": "1969-11-11",
+    "dateJoined": "2019-12-30",
+    "email": "mike2@123.com",
+    "reviewsCount": 12,
+    "reviews": [],
+    "followingCount": 1,
+    "followingList": [
+      123
+    ],
+    "followersCount": 2,
+    "followersList": [
+      123,
+      456
+    ],
+    "bookmarksCount": 0,
+    "bookmarksList": [],
+    "visibility": {
+      "location": true,
+      "birthday": true,
+      "bookmarks": true
+    }
+  },
+  {
+    "_id": "456",
+    "role": "customer",
+    "username": "mike3@123.com",
+    "password": "101112ABC",
+    "firstName": "Mike3",
+    "lastName": "Shah",
+    "image_url": "https://cdn.pixabay.com/photo/2014/11/13/06/12/boy-529067_960_720.jpg",
+    "location": "Los Angelos, CA",
+    "birthday": "1969-11-11",
+    "dateJoined": "2019-12-30",
+    "email": "mike3@123.com",
+    "reviewsCount": 12,
+    "reviews": [],
+    "followingCount": 3,
+    "followingList": [
+      123,
+      234,
+      345
+    ],
+    "followersCount": 0,
+    "followersList": [],
+    "visibility": {
+      "location": true,
+      "birthday": true,
+      "bookmarks": true
+    }
+  },
+
+  {
+    "_id": "567",
+    "role": "customer",
+    "username": "mike4@123.com",
+    "password": "131415ABC",
+    "firstName": "Mike4",
+    "lastName": "Shah",
+    "image_url": "https://cdn.pixabay.com/photo/2014/11/13/06/12/boy-529067_960_720.jpg",
+    "location": "Los Angelos, CA",
+    "birthday": "1969-11-11",
+    "dateJoined": "2019-12-30",
+    "email": "mike4@123.com",
+    "reviewsCount": 12,
+    "reviews": [],
+    "followingCount": 1,
+    "followingList": [
+      123
+    ],
+    "followersCount": 0,
+    "followersList": [],
+    "followersCount": 0,
+    "followersList": [],
+    "visibility": {
+      "location": true,
+      "birthday": true,
+      "bookmarks": true
+    }
+  },
+
+  {
+    "_id": "55667788",
+    "role": "business",
+    "verified": true,
+    "username": "monica@123.com",
+    "password": "131415ABC",
+    "firstName": "Monica",
+    "lastName": "Galler",
+    "location": "Brookline, NY",
+    "dateJoined": "2019-12-30",
+    "email": "monica@123.com",
+    "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+    "restaurant": {
+      "id": "Rv4NgRl-wkMNPNdqXNSGBg",
+      "name": "Shake Shack",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+      "location": {
+        "address1": "1 Old Fulton St",
+        "address2": "",
+        "address3": "",
+        "city": "Brooklyn",
+        "zip_code": "11201",
+        "country": "US",
+        "state": "NY",
+        "display_address": [
+          "1 Old Fulton St",
+          "Brooklyn, NY 11201"
+        ],
+        "cross_streets": ""
+      },
+      "rating": 3.65,
+      "review_count": 369,
+      "categories": [
+        {
+          "alias": "tradamerican",
+          "title": "American (Traditional)"
+        },
+        {
+          "alias": "icecream",
+          "title": "Ice Cream & Frozen Yogurt"
+        }
+      ],
+      "price": "$$"
+    }
+
+  }
+]
