@@ -69,5 +69,6 @@ app.get("/hello", (req, res) => {
 require('./services/restaurant-service')(app);
 require('./services/search-service')(app);
 require('./services/auto-completion-service')(app);
+require('./services/activity-service')(app);
 
 app.listen(process.env.PORT || 8000);
