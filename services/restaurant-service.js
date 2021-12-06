@@ -10,6 +10,7 @@ module.exports = (app) => {
             "location": "seattle, WA"
           }
         }).then(result => {
+          // console.log(result.data.businesses);
           res.json(result.data.businesses)
         })
       }
