@@ -25,8 +25,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// swagger
-
+/***************************************swagger*****************************************/
 const swaggerJsdoc = require('swagger-jsdoc');
 
 const options = {
@@ -46,6 +45,11 @@ const specs = swaggerJsdoc(options);
 const swaggerUi = require('swagger-ui-express');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+/********************************Mongoose Configure************************************/
+const mongoose = require('mongoose');
+mongoose.connect(CONSTANTS.MONGODB_URL);
+
+/********************************Session Configure*************************************/
 app.use(session({
                     secret: 'keyboard cat',
                     cookie: {},
@@ -53,15 +57,13 @@ app.use(session({
                     saveUninitialized: true
                 }));
 
-const mongoose = require('mongoose');
-mongoose.connect(CONSTANTS.MONGODB_URL);
 
-require('./services/login-service')(app);
-
+/***********************************Services************************************/
 app.get("/hello", (req, res) => {
     res.send("Hello World!");
 })
 
+require('./services/user-service')(app);
 require('./services/restaurant-service')(app);
 require('./services/search-service')(app);
 require('./services/auto-completion-service')(app);

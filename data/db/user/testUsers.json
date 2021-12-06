@@ -1,0 +1,29 @@
+[
+  {
+    "role": "customer",
+    "username": "fangying@123.com",
+    "password": "fangying123",
+    "email": "fangying@123.com",
+    "firstName": "Fangying",
+    "lastName": "Li",
+    "image_url": "https://s3-media0.fl.yelpcdn.com/photo/wVDMS5UpBq38LCF66T0L-g/o.jpg",
+    "location": "Boston, MA",
+    "birthday": "2021-11-1",
+    "dateJoined": "2019-9-1",
+    "customerData": {
+      "reviews": [],
+      "followings": [],
+      "followers": [],
+      "bookmarks": [],
+      "visibility": {
+        "location": true,
+        "birthday": true,
+        "bookmarks": true
+      }
+    },
+    "businessData": {
+      "verified": false,
+      "restaurantId": ""
+    }
+  }
+]
