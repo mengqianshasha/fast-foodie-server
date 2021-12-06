@@ -1,4 +1,6 @@
+
 const userDao = require('../data/db/user/user-dao');
+const moment =require('moment')
 
 module.exports = (app) => {
   const findAllUsers = (req, res) =>
@@ -41,6 +43,7 @@ module.exports = (app) => {
           })
   }
 
+
   const register = (req, res) => {
     userDao.findByUsername(req.body)
       .then(user => {
@@ -48,16 +51,55 @@ module.exports = (app) => {
           res.sendStatus(404);
           return;
         }
-        userDao.createUser(req.body)
+
+        let newUser = req.body;
+        if (newUser.role === "customer") {
+            newUser = {
+                ...newUser,
+                "dateJoined": moment().format("YYYY-MM-DD"),
+                "customerData": {
+                    "reviews": [],
+                    "followings": [],
+                    "followers": [],
+                    "bookmarks": [],
+                    "visibility": {
+                        "location": true,
+                        "birthday": true,
+                        "bookmarks": true
+                    }
+                }
+            }
+        } else {
+            newUser = {
+                ...newUser,
+                "dateJoined": moment().format("YYYY-MM-DD"),
+                "businessData": {
+                    "verified": false,
+                    "restaurantId": "",
+                }
+            }
+        }
+
+        userDao.createUser(newUser)
           .then(user => {
             req.session['profile'] = user;
-            res.json(user)
+            res.json(user) // Not necessary, could be status 200
           });
       })
   }
 
+
   const profile = (req, res) =>
     res.json(req.session['profile']);
+
+
+  const admin = (req, res) => {
+      userDao.findByRole("admin")
+          .then(admin => {
+              req.session['admin'] = admin;
+              res.json(admin)
+          })
+  }
 
   const logout = (req, res) =>
     res.send(req.session.destroy());
@@ -70,5 +112,6 @@ module.exports = (app) => {
   app.delete('/api/users/:userId', deleteUser);
   app.get('/api/users', findAllUsers);
   app.get('/api/users/:userId', findUserById);
+  app.get('/api/admin', admin);
   app.post('/api/register/verify', verifyUsername);
 };

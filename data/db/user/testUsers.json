@@ -8,6 +8,7 @@
     "lastName": "Li",
     "image_url": "https://s3-media0.fl.yelpcdn.com/photo/wVDMS5UpBq38LCF66T0L-g/o.jpg",
     "location": "Boston, MA",
+    "addressDetail" : "655 Columbus Street, Boston, MA 02118",
     "birthday": "2021-11-1",
     "dateJoined": "2019-9-1",
     "customerData": {
@@ -23,7 +24,8 @@
     },
     "businessData": {
       "verified": false,
-      "restaurantId": ""
+      "restaurantId": "",
+      "file_url": ""
     }
   }
 ]

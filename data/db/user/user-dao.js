@@ -12,6 +12,9 @@ const findByUsernameAndPassword = ({username, password}) =>
 const findByUsername = ({username}) =>
   userModel.findOne({username});
 
+const findByRole = (role) =>
+    userModel.findOne({"role": role});
+
 const createUser = (user) =>
   userModel.create(user);
 
@@ -25,6 +28,6 @@ const deleteUser = (userId) =>
 
 module.exports = {
   findByUsername, findAllUsers, findUserById,
-  findByUsernameAndPassword,
+  findByUsernameAndPassword, findByRole,
   createUser, updateUser, deleteUser
 };

@@ -9,8 +9,9 @@ const userSchema = mongoose.Schema({
                                        lastName: String,
                                        image_url: String,
                                        location: String,
-                                       birthday: Date,
-                                       dateJoined: Date,
+                                       addressDetail: String,
+                                       birthday: String,
+                                       dateJoined: String,
                                        customerData: {
                                            reviews: [String],
                                            followings: [String],
@@ -24,7 +25,8 @@ const userSchema = mongoose.Schema({
                                        },
                                        businessData: {
                                            verified: {type: Boolean, default: false},
-                                           restaurant: String
+                                           restaurant: String,
+                                           file_url: String
                                        }
                                    }, {collection: 'users'});
 
