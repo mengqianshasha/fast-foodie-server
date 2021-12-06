@@ -70,7 +70,7 @@ module.exports = (app) => {
         let profile = req.session['profile'];
 
          /**********************************Business owner*********************************/
-        if (profile.role === "business") {
+        if (profile !== undefined && profile.role === "business") {
             // If restaurant already stored in session
             if (profile.businessData.restaurant.name) {
                 res.json(profile);
