@@ -1,9 +1,9 @@
 [
   {
-    "activity_id": "123",
+    "_id": "123",
     "type": "add photo",
     "user": {
-      "name": "nearby user",
+      "name": "I am a user",
       "_id": "123",
       "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
     },
@@ -11,28 +11,16 @@
       "_id": "123",
       "name": "I Love Sushi"
     },
-    "photo_url": "https://s3-media0.fl.yelpcdn.com/bphoto/y1Tr5aNzCrsdcVpNjnhdMg/300s.jpg"
-  },
-  {
-    "activity_id": "123",
-    "type": "bookmark",
-    "user": {
-      "name": "nearby user",
+    "photo": {
       "_id": "123",
-      "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
-    },
-    "restaurant": {
-      "_id": "123",
-      "name": "I Love Sushi",
-      "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
+      "photo_url": "https://s3-media0.fl.yelpcdn.com/bphoto/y1Tr5aNzCrsdcVpNjnhdMg/300s.jpg"
     }
   },
   {
-    "activity_id": "123",
-    "type": "review",
-    "name": "nearby user",
+    "_id": "123",
+    "type": "bookmark",
     "user": {
-      "name": "nearby user",
+      "name": "following user",
       "_id": "123",
       "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
     },
@@ -41,15 +29,35 @@
       "name": "I Love Sushi",
       "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
     },
-    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, aut dolore excepturi fugit hic provident sint veniam voluptate. Accusantium consequuntur culpa doloremque mollitia officiis perspiciatis quam voluptatem! Beatae, distinctio, explicabo.",
-    "rating": 3,
-    "photo_url": ""
+    "bookmark": {
+      "_id": "123"
+    }
   },
   {
-    "activity_id": "123",
+    "_id": "123",
+    "type": "review",
+    "user": {
+      "name": "following user",
+      "_id": "123",
+      "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
+    },
+    "restaurant": {
+      "_id": "123",
+      "name": "I Love Sushi",
+      "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
+    },
+    "review": {
+      "_id": "123",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, aut dolore excepturi fugit hic provident sint veniam voluptate. Accusantium consequuntur culpa doloremque mollitia officiis perspiciatis quam voluptatem! Beatae, distinctio, explicabo.",
+      "rating": 3,
+      "photo_url": ""
+    }
+  },
+  {
+    "_id": "123",
     "type": "add photo",
     "user": {
-      "name": "nearby user",
+      "name": "I am a user",
       "_id": "123",
       "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
     },
@@ -57,28 +65,16 @@
       "_id": "123",
       "name": "I Love Sushi"
     },
-    "photo_url": "https://s3-media0.fl.yelpcdn.com/bphoto/y1Tr5aNzCrsdcVpNjnhdMg/300s.jpg"
-  },
-  {
-    "activity_id": "123",
-    "type": "bookmark",
-    "user": {
-      "name": "nearby user",
+    "photo": {
       "_id": "123",
-      "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
-    },
-    "restaurant": {
-      "id": "123",
-      "name": "I Love Sushi",
-      "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
+      "photo_url": "https://s3-media0.fl.yelpcdn.com/bphoto/y1Tr5aNzCrsdcVpNjnhdMg/300s.jpg"
     }
   },
   {
-    "activity_id": "123",
-    "type": "review",
-    "name": "nearby user",
+    "_id": "123",
+    "type": "bookmark",
     "user": {
-      "name": "nearby user",
+      "name": "following user",
       "_id": "123",
       "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
     },
@@ -87,15 +83,35 @@
       "name": "I Love Sushi",
       "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
     },
-    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, aut dolore excepturi fugit hic provident sint veniam voluptate. Accusantium consequuntur culpa doloremque mollitia officiis perspiciatis quam voluptatem! Beatae, distinctio, explicabo.",
-    "rating": 3,
-    "photo_url": "https://s3-media0.fl.yelpcdn.com/bphoto/y1Tr5aNzCrsdcVpNjnhdMg/300s.jpg"
+    "bookmark": {
+      "_id": "123"
+    }
   },
   {
-    "activity_id": "123",
+    "_id": "123",
+    "type": "review",
+    "user": {
+      "name": "following user",
+      "_id": "123",
+      "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
+    },
+    "restaurant": {
+      "_id": "123",
+      "name": "I Love Sushi",
+      "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
+    },
+    "review": {
+      "_id": "123",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, aut dolore excepturi fugit hic provident sint veniam voluptate. Accusantium consequuntur culpa doloremque mollitia officiis perspiciatis quam voluptatem! Beatae, distinctio, explicabo.",
+      "rating": 3,
+      "photo_url": ""
+    }
+  },
+  {
+    "_id": "123",
     "type": "add photo",
     "user": {
-      "name": "nearby user",
+      "name": "I am a user",
       "_id": "123",
       "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
     },
@@ -103,28 +119,16 @@
       "_id": "123",
       "name": "I Love Sushi"
     },
-    "photo_url": "https://s3-media0.fl.yelpcdn.com/bphoto/y1Tr5aNzCrsdcVpNjnhdMg/300s.jpg"
-  },
-  {
-    "activity_id": "123",
-    "type": "bookmark",
-    "user": {
-      "name": "nearby user",
+    "photo": {
       "_id": "123",
-      "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
-    },
-    "restaurant": {
-      "_id": "123",
-      "name": "I Love Sushi",
-      "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
+      "photo_url": "https://s3-media0.fl.yelpcdn.com/bphoto/y1Tr5aNzCrsdcVpNjnhdMg/300s.jpg"
     }
   },
   {
-    "activity_id": "123",
-    "type": "review",
-    "name": "nearby user",
+    "_id": "123",
+    "type": "bookmark",
     "user": {
-      "name": "nearby user",
+      "name": "following user",
       "_id": "123",
       "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
     },
@@ -133,8 +137,28 @@
       "name": "I Love Sushi",
       "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
     },
-    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, aut dolore excepturi fugit hic provident sint veniam voluptate. Accusantium consequuntur culpa doloremque mollitia officiis perspiciatis quam voluptatem! Beatae, distinctio, explicabo.",
-    "rating": 3,
-    "photo_url": "https://s3-media0.fl.yelpcdn.com/bphoto/y1Tr5aNzCrsdcVpNjnhdMg/300s.jpg"
+    "bookmark": {
+      "_id": "123"
+    }
+  },
+  {
+    "_id": "123",
+    "type": "review",
+    "user": {
+      "name": "following user",
+      "_id": "123",
+      "img_url": "https://s3-media0.fl.yelpcdn.com/photo/E5Ce5L_UFtVT1unD9lhBYw/30s.jpg"
+    },
+    "restaurant": {
+      "_id": "123",
+      "name": "I Love Sushi",
+      "img_url": "https://s3-media0.fl.yelpcdn.com/bphoto/XtTaAmQkvpfpJzkI_pCwZg/l.jpg"
+    },
+    "review": {
+      "_id": "123",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, aut dolore excepturi fugit hic provident sint veniam voluptate. Accusantium consequuntur culpa doloremque mollitia officiis perspiciatis quam voluptatem! Beatae, distinctio, explicabo.",
+      "rating": 3,
+      "photo_url": ""
+    }
   }
 ]
