@@ -7,10 +7,10 @@ const userSchema = mongoose.Schema({
                                        email: String,
                                        firstName: String,
                                        lastName: String,
-                                       image_url: String,
-                                       location: String,
-                                       addressDetail: String,
-                                       birthday: String,
+                                       image_url: {type: String, default: "https://as2.ftcdn.net/v2/jpg/00/64/67/63/1000_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"},
+                                       location: {type: String, default: ""},
+                                       addressDetail: {type: String, default: ""},
+                                       birthday: {type: String, default: ""},
                                        dateJoined: String,
                                        customerData: {
                                            reviews: [String],
@@ -25,8 +25,8 @@ const userSchema = mongoose.Schema({
                                        },
                                        businessData: {
                                            verified: {type: Boolean, default: false},
-                                           restaurant: String,
-                                           file_url: String
+                                           restaurant: {type: String, default: ""},
+                                           file_url: {type: String, default: ""}
                                        }
                                    }, {collection: 'users'});
 

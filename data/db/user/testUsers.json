@@ -27,5 +27,35 @@
       "restaurantId": "",
       "file_url": ""
     }
+  },
+
+  {
+    "role": "business",
+    "username": "monica@123.com",
+    "password": "monica",
+    "email": "monica@123.com",
+    "firstName": "Monica",
+    "lastName": "Galler",
+    "image_url": "https://s3-media0.fl.yelpcdn.com/photo/wVDMS5UpBq38LCF66T0L-g/o.jpg",
+    "location": "Boston, MA",
+    "addressDetail" : "",
+    "birthday": "",
+    "dateJoined": "2019-9-1",
+    "customerData": {
+      "reviews": [],
+      "followings": [],
+      "followers": [],
+      "bookmarks": [],
+      "visibility": {
+        "location": true,
+        "birthday": true,
+        "bookmarks": true
+      }
+    },
+    "businessData": {
+      "verified": true,
+      "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
+      "file_url": "http://www.africau.edu/images/default/sample.pdf"
+    }
   }
 ]
