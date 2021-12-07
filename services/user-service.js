@@ -45,6 +45,7 @@ module.exports = (app) => {
     }
 
     const register = (req, res) => {
+        console.log("i'm regitster");
         userDao.findByUsername(req.body)
             .then(user => {
                 if (user) {
