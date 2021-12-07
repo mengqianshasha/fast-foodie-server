@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const userSchema = require('./user-schema');
+const reviewSchema = require('./review-schema');
 const reviewModel = mongoose
-  .model('UserModel', userSchema);
+  .model('ReviewModel', reviewSchema);
 module.exports = reviewModel;
