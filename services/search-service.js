@@ -1,4 +1,4 @@
-const {getYelpSearch} = require("../data/api/yelp-api");
+const {getYelpSearch, getYelpMatch} = require("../data/api/yelp-api");
 
 module.exports = (app) => {
     const searchRestaurants = (req, res) => {
@@ -9,6 +9,15 @@ module.exports = (app) => {
             })
             .catch((e)=>{
                 res.sendStatus(404);
+            })
+    }
+
+
+    const matchRestaurant = (req, res) => {
+
+        getYelpMatch(req.query)
+            .then(response=>{
+                res.json(response.data['businesses'][0])
             })
     }
 
@@ -31,6 +40,7 @@ module.exports = (app) => {
      *          required: false
      *          description: define search term
      */
-    app.get("/api/search/:location?", searchRestaurants)
+    app.get("/api/search/:location?", searchRestaurants);
+    app.get("/api/match?", matchRestaurant);
 
 }

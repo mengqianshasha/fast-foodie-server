@@ -28,6 +28,9 @@ const userSchema = mongoose.Schema({
                                            restaurant: {type: String, default: ""},
                                            file_url: {type: String, default: ""}
                                        }
+                                       // adminData: {
+                                       //
+                                       // }
                                    }, {collection: 'users'});
 
 module.exports = userSchema;

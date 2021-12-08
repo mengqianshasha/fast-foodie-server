@@ -52,7 +52,7 @@ mongoose.connect(CONSTANTS.MONGODB_URL);
 /********************************Session Configure*************************************/
 app.use(session({
                     secret: 'keyboard cat',
-                    cookie: {},
+                    cookie: {MaxAge: 600000000000},
                     resave: false,
                     saveUninitialized: true
                 }));

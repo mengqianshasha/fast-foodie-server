@@ -19,14 +19,39 @@ const getYelpSearch = (location, params) => {
         },
         params: {
             "categories": "restaurants",
-            "location": location
+            "location": location,
+            ...params
         }
     };
-    Object.keys(params).map(key => config.params[key] = params[key])
     return axios.get(`${YELP_API_URL}/businesses/search`, config)
 }
 
+
+const getYelpMatch = (params) => {
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${process.env.YELP_API_KEY}`
+        },
+        params: {
+            country: "US",
+            ...params
+        }
+    }
+    return axios.get(`${YELP_API_URL}/businesses/matches`, config)
+
+}
+
+const getYelpDetail = (id) => {
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${process.env.YELP_API_KEY}`
+        }
+    }
+    return axios.get(`${YELP_API_URL}/businesses/${id}`, config)
+}
 module.exports = {
     getYelpAutoCompletion,
-    getYelpSearch
+    getYelpSearch,
+    getYelpMatch,
+    getYelpDetail
 }

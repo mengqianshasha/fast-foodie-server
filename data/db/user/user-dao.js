@@ -26,8 +26,53 @@ const updateUser = (user) =>
 const deleteUser = (userId) =>
   userModel.deleteOne({_id: userId});
 
+
+// return value is a promise that returns the user of userId
+const addToFollowings = (userId, userIdToAdd) => {
+    return userModel.findOne({"_id": userId})
+        .then(user => {
+            if (!(userIdToAdd in user.customerData.followings)){
+                user.customerData.followings.push(userIdToAdd);
+                return user.save();
+            }
+
+        })
+}
+
+const deleteFromFollowings = (userId, userIdToDelete) => {
+    return userModel.findOne({"_id": userId})
+        .then(user => {
+            if (userIdToDelete in user.customerData.followings){
+                user.customerData.followings = user.customerData.followings.filter(singleUser => singleUser._id !== userIdToDelete);
+                return user.save();
+            }
+        })
+}
+
+const addToFollowers = (userId, userIdToAdd) => {
+    return userModel.findOne({"_id": userId})
+        .then(user => {
+            if (!(userIdToAdd in user.customerData.followers)){
+                user.customerData.followers.push(userIdToAdd);
+                return user.save();
+            }
+
+        })
+}
+
+const deleteFromFollowers = (userId, userIdToDelete) => {
+    return userModel.findOne({"_id": userId})
+        .then(user => {
+            if (userIdToDelete in user.customerData.followers){
+                user.customerData.followers = user.customerData.followers.filter(singleUser => singleUser._id !== userIdToDelete);
+                return user.save();
+            }
+        })
+}
+
 module.exports = {
   findByUsername, findAllUsers, findUserById,
   findByUsernameAndPassword, findByRole,
-  createUser, updateUser, deleteUser
+  createUser, updateUser, deleteUser,
+  addToFollowings, deleteFromFollowings, addToFollowers, deleteFromFollowers
 };

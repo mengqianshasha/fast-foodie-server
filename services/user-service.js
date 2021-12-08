@@ -45,7 +45,6 @@ module.exports = (app) => {
     }
 
     const register = (req, res) => {
-        console.log("i'm regitster");
         userDao.findByUsername(req.body)
             .then(user => {
                 if (user) {
@@ -125,6 +124,8 @@ module.exports = (app) => {
 
     const logout = (req, res) =>
         res.send(req.session.destroy());
+
+
 
     app.post('/api/login', login);
     app.post('/api/register', register);
