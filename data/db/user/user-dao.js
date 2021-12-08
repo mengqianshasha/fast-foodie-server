@@ -45,6 +45,8 @@ const deleteFromFollowings = (userId, userIdToDelete) => {
             if (userIdToDelete in user.customerData.followings){
                 user.customerData.followings = user.customerData.followings.filter(singleUser => singleUser._id !== userIdToDelete);
                 return user.save();
+            } else {
+                return user;
             }
         })
 }
@@ -66,6 +68,8 @@ const deleteFromFollowers = (userId, userIdToDelete) => {
             if (userIdToDelete in user.customerData.followers){
                 user.customerData.followers = user.customerData.followers.filter(singleUser => singleUser._id !== userIdToDelete);
                 return user.save();
+            } else {
+                return user;
             }
         })
 }
