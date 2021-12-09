@@ -16,7 +16,6 @@ module.exports = (app) => {
                 res.json(user)
             })
     }
-
     const deleteUser = (req, res) =>
         userDao.deleteUser(req.params.userId)
             .then(status => req.send(status));
@@ -143,7 +142,7 @@ module.exports = (app) => {
 
     const follow = (req, res) => {
         const followeeId = req.body['followeeId'];
-        const userId = req.session['profile'];
+        const userId = req.session['profile']['_id'];
         addToFollowings(userId, followeeId)
             .then(response => {
                 addToFollowers(followeeId, userId)
@@ -156,7 +155,7 @@ module.exports = (app) => {
 
     const unfollow = (req, res) => {
         const followeeId = req.body['followeeId'];
-        const userId = req.session['profile'];
+        const userId = req.session['profile']['_id'];
         deleteFromFollowings(userId, followeeId)
             .then(response => {
                 deleteFromFollowers(followeeId, userId)
