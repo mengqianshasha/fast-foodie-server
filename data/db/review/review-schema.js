@@ -4,6 +4,7 @@ const reviewSchema = mongoose.Schema({
                                          user: String,
                                          restaurant: String,
                                          time_created: String,
+                                         location: String,
                                          rating: Number,
                                          text: String,
                                          img: [{

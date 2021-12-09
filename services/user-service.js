@@ -1,5 +1,6 @@
 const userDao = require('../data/db/user/user-dao');
 const moment = require('moment')
+const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require("../data/db/user/user-dao");
 
 module.exports = (app) => {
     const axios = require('axios');
@@ -45,7 +46,6 @@ module.exports = (app) => {
     }
 
     const register = (req, res) => {
-        console.log("i'm regitster");
         userDao.findByUsername(req.body)
             .then(user => {
                 if (user) {
@@ -126,6 +126,32 @@ module.exports = (app) => {
     const logout = (req, res) =>
         res.send(req.session.destroy());
 
+    const follow = (req, res) => {
+        const followeeId = req.body['followeeId'];
+        const userId = req.session['profile'];
+        addToFollowings(userId, followeeId)
+            .then(response => {
+                addToFollowers(followeeId, userId)
+                    .then(state => {
+                        req.session['profile']['customerData']['followings'].push(followeeId);
+                        res.sendStatus(200);
+                    })
+            })
+    }
+
+    const unfollow = (req, res) => {
+        const followeeId = req.body['followeeId'];
+        const userId = req.session['profile'];
+        deleteFromFollowings(userId, followeeId)
+            .then(response => {
+                deleteFromFollowers(followeeId, userId)
+                    .then(state => {
+                        req.session['profile']['customerData']['followings'] = req.session['profile']['customerData']['followings'].filter(followingId => followingId !== followeeId);
+                        res.sendStatus(200);
+                    })
+            })
+    }
+
     app.post('/api/login', login);
     app.post('/api/register', register);
     app.post('/api/profile', profile);
@@ -136,4 +162,6 @@ module.exports = (app) => {
     app.get('/api/users/:userId', findUserById);
     app.get('/api/admin', admin);
     app.post('/api/register/verify', verifyUsername);
+    app.put('/api/follow', follow);
+    app.put('/api/unfollow', unfollow)
 };
