@@ -10,7 +10,7 @@ module.exports = (app) => {
             .then(users => res.json(users));
 
     const findUserById = (req, res) =>
-        userDao.findUserById(req.userId)
+        userDao.findUserById(req.params.userId)
             .then(user => res.json(user));
 
     const deleteUser = (req, res) =>
@@ -106,6 +106,9 @@ module.exports = (app) => {
                 })
             }
         }
+/*        else if (profile !== undefined && profile.role === "customer") {
+
+        }*/
 
         /**********************************Customer User*********************************/
         else {

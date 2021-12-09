@@ -1,30 +1,24 @@
-const reviewModel = require('./review-model');
+ // NOTED: Must use the real user/review/... id in the database
 
-const findAllReviews = () =>
-    reviewModel.find();
+const model = require('./activity-model');
 
-const findReviewById = (reviewId) =>
-    reviewModel.findById(reviewId);
+const findAllActivitiesFromNewest = () =>
+    model.find().sort({_id: -1});
+
+const findActivityById = (activityId) =>
+    model.findById(activityId);
 
 const findByUserIdFromNewest = (userId) =>
-    reviewModel.find({"user": userId}).sort({_id: -1});
+    model.find({"user": userId}).sort({_id: -1});
 
-const findByRestaurantIdFromNewest = (restaurantId) =>
-    reviewModel.find({"restaurant": restaurantId}).sort({_id: -1});
+const createActivity = (activity) =>
+    model.create(activity);
 
-const createReview = (review) =>
-    reviewModel.create(review);
-
-const updateReview = (review) =>
-    reviewModel.updateOne({_id: review._id}, {
-        $set: review
-    });
-
-const deleteReview = (reviewId) =>
-    reviewModel.deleteOne({_id: reviewId});
+const deleteActivity = (activityId) =>
+    model.deleteOne({_id: reviewId});
 
 module.exports = {
-    findAllReviews, findReviewById,
-    findByUserIdFromNewest, findByRestaurantIdFromNewest,
-    createReview, updateReview, deleteReview
+    findAllActivitiesFromNewest, findActivityById,
+    findByUserIdFromNewest,
+    createActivity, deleteActivity
 };

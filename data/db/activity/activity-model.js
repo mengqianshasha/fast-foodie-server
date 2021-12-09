@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const userSchema = require('./user-schema');
+const schema = require('./activity-schema');
 const activityModel = mongoose
-  .model('UserModel', userSchema);
+  .model('ActivityModel', schema);
 module.exports = activityModel;
