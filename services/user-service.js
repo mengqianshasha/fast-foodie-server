@@ -9,9 +9,12 @@ module.exports = (app) => {
         userDao.findAllUsers()
             .then(users => res.json(users));
 
-    const findUserById = (req, res) =>
-        userDao.findUserById(req.userId)
-            .then(user => res.json(user));
+    const findUserById = (req, res) => {
+        userDao.findUserById(req.params['userId'])
+            .then(user => {
+                res.json(user)
+            })
+    }
 
     const deleteUser = (req, res) =>
         userDao.deleteUser(req.params.userId)
