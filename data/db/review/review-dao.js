@@ -25,8 +25,8 @@ const findReviewsByLocationExcludeUser= (location, user) => {
 const createReview = (review) =>
     reviewModel.create(review);
 
-const updateReview = (review) =>
-    reviewModel.updateOne({_id: review._id}, {
+const updateReview = (id, review) =>
+    reviewModel.updateOne({_id: id}, {
         $set: review
     });
 
