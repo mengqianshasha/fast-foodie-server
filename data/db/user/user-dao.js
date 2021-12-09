@@ -67,8 +67,9 @@ const addToFollowers = (userId, userIdToAdd) => {
 const deleteFromFollowers = (userId, userIdToDelete) => {
     return userModel.findOne({"_id": userId})
         .then(user => {
-            if (userIdToDelete in user.customerData.followers){
-                user.customerData.followers = user.customerData.followers.filter(singleUser => singleUser._id !== userIdToDelete);
+
+            if (user.customerData.followers.includes(userIdToDelete)){
+                user.customerData.followers = user.customerData.followers.filter(singleUser => singleUser !== userIdToDelete);
                 return user.save();
             } else {
                 return user;
