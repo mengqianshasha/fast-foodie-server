@@ -1,4 +1,5 @@
 const userDao = require('../data/db/user/user-dao');
+const userActivityDao = require('../data/db/activity/activity-dao')
 const moment = require('moment')
 const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require("../data/db/user/user-dao");
 
@@ -15,7 +16,7 @@ module.exports = (app) => {
                 res.json(user)
             })
     }
-    
+
     const deleteUser = (req, res) =>
         userDao.deleteUser(req.params.userId)
             .then(status => req.send(status));
@@ -31,10 +32,18 @@ module.exports = (app) => {
                 if (user) {
                     req.session['profile'] = user;
                     res.json(user);
-                    return;
+                } else {
+                    res.sendStatus(403);
                 }
-                res.sendStatus(403);
             })
+            // Attach user-activities to session
+            .then(res => {
+                userActivityDao.findActivityByUserIdFromNewest()
+                    .then(activities => {
+                        req.session['user-activities'] = activities;
+                    })
+            }
+        )
     }
 
     const verifyUsername = (req, res) => {

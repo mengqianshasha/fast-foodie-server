@@ -8,7 +8,7 @@ const findAllActivitiesFromNewest = () =>
 const findActivityById = (activityId) =>
     model.findById(activityId);
 
-const findByUserIdFromNewest = (userId) =>
+const findActivityByUserIdFromNewest = (userId) =>
     model.find({"user": userId}).sort({_id: -1});
 
 const createActivity = (activity) =>
@@ -19,6 +19,6 @@ const deleteActivity = (activityId) =>
 
 module.exports = {
     findAllActivitiesFromNewest, findActivityById,
-    findByUserIdFromNewest,
+    findActivityByUserIdFromNewest,
     createActivity, deleteActivity
 };
