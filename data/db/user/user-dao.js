@@ -8,8 +8,10 @@ const findUserById = (userId) =>{
 }
 
 
-const findByUsernameAndPassword = ({username, password}) =>
-  userModel.findOne({username, password});
+const findByUsernameAndPassword = ({username, password}) => {
+    return userModel.findOne({username, password});
+}
+
 
 const findByUsername = ({username}) =>
   userModel.findOne({username});
@@ -45,7 +47,7 @@ const deleteFromFollowings = (userId, userIdToDelete) => {
     return userModel.findOne({"_id": userId})
         .then(user => {
             if (userIdToDelete in user.customerData.followings){
-                user.customerData.followings = user.customerData.followings.filter(singleUser => singleUser._id !== userIdToDelete);
+                user.customerData.followings = user.customerData.followings.filter(singleUser => singleUser !== userIdToDelete);
                 return user.save();
             } else {
                 return user;

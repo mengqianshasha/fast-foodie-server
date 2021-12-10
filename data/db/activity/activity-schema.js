@@ -6,9 +6,9 @@ const activitySchema = mongoose.Schema({
                                            user: String,
                                            type: String,
                                            time_created: String,
-                                           bookmarks: String,
-                                           follows: String,
-                                           reviews: String
+                                           bookmark: String,
+                                           follow: String,
+                                           review: String
                                        }, {collection: 'activities'});
 
 module.exports = activitySchema;

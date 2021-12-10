@@ -10,6 +10,10 @@ const findAllReviewsFromNewest = () => {
 const findReviewById = (reviewId) =>
     reviewModel.findById(reviewId);
 
+const findReviewByIdAsync = async (reviewId) => {
+    return reviewModel.findById(reviewId);
+}
+
 const findReviewsByIdsFromNewest = (userIds) => {
     return reviewModel.find({user: {$in: userIds}}).sort({"_id": -1});
 }
@@ -34,7 +38,7 @@ const deleteReview = (reviewId) =>
     reviewModel.deleteOne({_id: reviewId});
 
 module.exports = {
-    findAllReviews, findReviewById,
+    findAllReviews, findReviewById, findReviewByIdAsync,
     findByUserIdFromNewest, findByRestaurantIdFromNewest,
     createReview, updateReview, deleteReview,
     findAllReviewsFromNewest, findReviewsByLocationExcludeUser, findReviewsByIdsFromNewest,

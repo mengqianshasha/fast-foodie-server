@@ -8,8 +8,10 @@ const findAllActivitiesFromNewest = () =>
 const findActivityById = (activityId) =>
     model.findById(activityId);
 
-const findActivityByUserIdFromNewest = (userId) =>
-    model.find({"user": userId}).sort({_id: -1});
+const findActivityByUserIdFromNewest = (userId) => {
+    return model.find({"user": userId}).sort({_id: -1});
+}
+
 
 const createActivity = (activity) =>
     model.create(activity);

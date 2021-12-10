@@ -1,7 +1,8 @@
 const userDao = require('../data/db/user/user-dao');
 const userActivityDao = require('../data/db/activity/activity-dao')
 const moment = require('moment')
-const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require("../data/db/user/user-dao");
+const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require(
+    "../data/db/user/user-dao");
 
 module.exports = (app) => {
     const axios = require('axios');
@@ -30,19 +31,20 @@ module.exports = (app) => {
             .then(user => {
                 if (user) {
                     req.session['profile'] = user;
-                    res.json(user);
+                    // Attach user-activities list to session
+                    userActivityDao.findActivityByUserIdFromNewest((user['_id']).toString())
+                        .then(activities => {
+                            req.session['userActivities'] = activities;
+                            res.json(user);
+                        });
                 } else {
                     res.sendStatus(403);
                 }
             })
-            // Attach user-activities to session
-            .then(res => {
-                userActivityDao.findActivityByUserIdFromNewest()
-                    .then(activities => {
-                        req.session['user-activities'] = activities;
-                    })
-            }
-        )
+    }
+
+    const getSession = (req, res) => {
+        res.send(req.session);
     }
 
     const verifyUsername = (req, res) => {
@@ -81,7 +83,7 @@ module.exports = (app) => {
     const profile = (req, res) => {
         let profile = req.session['profile'];
 
-         /**********************************Business owner*********************************/
+        /**********************************Business owner*********************************/
         if (profile !== undefined && profile.role === "business") {
             // If restaurant already stored in session
             if (profile.businessData.restaurant.name) {
@@ -117,17 +119,15 @@ module.exports = (app) => {
                 })
             }
         }
-/*        else if (profile !== undefined && profile.role === "customer") {
+            /*        else if (profile !== undefined && profile.role === "customer") {
 
-        }*/
+                    }*/
 
         /**********************************Customer User*********************************/
         else {
             res.json(profile);
         }
     }
-
-
 
     const admin = (req, res) => {
         userDao.findByRole("admin")
@@ -160,7 +160,9 @@ module.exports = (app) => {
             .then(response => {
                 deleteFromFollowers(followeeId, userId)
                     .then(state => {
-                        req.session['profile']['customerData']['followings'] = req.session['profile']['customerData']['followings'].filter(followingId => followingId !== followeeId);
+                        req.session['profile']['customerData']['followings'] =
+                            req.session['profile']['customerData']['followings'].filter(
+                                followingId => followingId !== followeeId);
                         res.sendStatus(200);
                     })
             })
@@ -177,5 +179,6 @@ module.exports = (app) => {
     app.get('/api/admin', admin);
     app.post('/api/register/verify', verifyUsername);
     app.put('/api/follow', follow);
-    app.put('/api/unfollow', unfollow)
+    app.put('/api/unfollow', unfollow);
+    app.get('/api/session', getSession);
 };
