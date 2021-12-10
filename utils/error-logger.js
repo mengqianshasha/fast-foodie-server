@@ -1,5 +1,3 @@
-const {json} = require("express");
-const {toJSON} = require("express-session/session/cookie");
 const log_axios_error = (error) => {
     if (error.response) {
         // The request was made and the server responded with a status code
