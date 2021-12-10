@@ -2,7 +2,7 @@ const userActivityDao = require('../data/db/activity/activity-dao')
 const reviewDao = require('../data/db/review/review-dao')
 const userDao = require('../data/db/user/user-dao')
 const moment = require('moment')
-const reviewModel = require('../data/db/review/review-model')
+
 
 module.exports = (app) => {
     const axios = require('axios');
@@ -29,6 +29,19 @@ module.exports = (app) => {
                     console.log(e)
                 }
 
+                // Retrieve user data of this review
+/*                try {
+                    const userId = reviewDetail['user'];
+                    let user={};
+                    user = await userDao.findUserById(userId).exec();
+                    reviewDetail = {
+                        ...reviewDetail,
+                        "userDetail": {...user}
+                    }
+                }catch (e) {
+                    console.log(e);
+                }*/
+
                 // Retrieve restaurant data of this review
                 try {
                     const restaurantId = reviewDetail['restaurant'];
@@ -50,7 +63,8 @@ module.exports = (app) => {
                     ...activityDetail,
                     "reviewDetail": reviewDetail
                 }
-            } else if (activity.type === "follow") {
+            }
+            else if (activity.type === "follow") {
                 if (activity.followDetail) return activities;
                 let followee = {};
                 try {
@@ -64,9 +78,59 @@ module.exports = (app) => {
                 }
             }
 
+            else if (activity.type === "reply-review") {
+                if (activity.reviewDetail) return activities;
+                let reviewDetail = {};
+
+                try {
+                    const findReviewDetail = await reviewDao.findReviewById(activity['replyReview']).exec();
+                    // I don't know why, but the returned data is inside '_doc' property
+                    reviewDetail = findReviewDetail['_doc']
+                } catch (e) {
+                    console.log(e)
+                }
+
+                // Retrieve user data of this review
+                    const userId = reviewDetail['user'];
+                    let user={};
+                try {
+                    const findUserDetail = await userDao.findUserById(userId).exec();
+                    user = findUserDetail['_doc']
+                    reviewDetail = {
+                        ...reviewDetail,
+                        "userDetail": {...user}
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+
+                // Retrieve restaurant data of this review
+/*                try {
+                    const restaurantId = reviewDetail['restaurant'];
+                    const business = await axios.get(
+                        `http://api.yelp.com/v3/businesses/${restaurantId}`, {
+                            headers: {
+                                "Authorization": `Bearer ${process.env.YELP_API_KEY}`
+                            }
+                        })
+                    reviewDetail = {
+                        ...reviewDetail,
+                        "restaurantDetail": {...business.data}
+                    }
+                } catch (e) {
+                    console.log(e);
+                }*/
+
+                activityDetail = {
+                    ...activityDetail,
+                    "reviewDetail": reviewDetail
+                }
+            }
+
             newActivities.push(activityDetail);
         }
-        return newActivities;
+
+        return newActivities.length > 10 ? newActivities.slice(0, 10) : newActivities;
     }
 
     const userActivities = (req, res) => {
@@ -78,5 +142,18 @@ module.exports = (app) => {
             })
     }
 
+    const createActivity = (req, res) => {
+        const newActivity = {
+            ...req.body,
+            "time_created": moment().format('YYYY-MM-DD HH:mm:ss')
+        };
+        userActivityDao.createActivity(newActivity)
+            .then(insertedActivity => res.send(insertedActivity))
+    }
+
+
+
     app.post('/api/activities', userActivities);
+    app.post('/api/newActivity', createActivity);
+
 }

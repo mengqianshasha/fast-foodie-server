@@ -1,0 +1,158 @@
+[
+  {
+    "_id": "112233",
+    "user": {
+      "_id": "00000000000"
+    },
+    "type": "in-message",
+    "time_created": "2021-12-1 11:00:40",
+    "message": {
+      "_id": "555666",
+      "sender": {
+        "_id": "345",
+        "image_url": "/images/ProfilePage/avatar_img2.jpg",
+        "firstName": "Mike",
+        "lastName": "Shah",
+        "location": "Los Angelos, CA",
+        "reviewsCount": 12,
+        "followersCount": 2
+      },
+      "receiver": {
+        "_id": "00000000000000"
+      },
+      "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "time_created": "2021-12-1 11:00:40"
+    }
+  },
+
+
+  {
+    "_id": "11223344",
+    "user": {
+      "_id": "00000000000"
+    },
+    "type": "report-review",
+    "time_created": "2021-12-1 12:05:40",
+    "report": {
+      "user": {
+        "_id": "345",
+        "image_url": "/images/ProfilePage/avatar_img2.jpg",
+        "firstName": "Mike",
+        "lastName": "Shah",
+        "location": "Los Angelos, CA"
+      },
+      "reason": "False Information",
+      "review": {
+        "_id": "12345678",
+        "user": {
+          "_id": "123",
+          "firstName": "Fangying",
+          "lastName": " Li",
+          "image_url": "/images/ProfilePage/avatar_img.jpg",
+          "location": "Boston, MA",
+          "reviewsCount": 88,
+          "followersCount": 3
+        },
+        "restaurant": {
+          "id": "Rv4NgRl-wkMNPNdqXNSGBg",
+          "name": "Shake Shack",
+          "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+          "location": {
+            "address1": "1 Old Fulton St",
+            "address2": "",
+            "address3": "",
+            "city": "Brooklyn",
+            "zip_code": "11201",
+            "country": "US",
+            "state": "NY",
+            "display_address": [
+              "1 Old Fulton St",
+              "Brooklyn, NY 11201"
+            ],
+            "cross_streets": ""
+          },
+          "rating": 3.65,
+          "review_count": 369,
+          "categories": [
+            {
+              "alias": "tradamerican",
+              "title": "American (Traditional)"
+            },
+            {
+              "alias": "icecream",
+              "title": "Ice Cream & Frozen Yogurt"
+            }
+          ],
+          "price": "$$"
+        },
+        "time_created": "Nov 28, 2021 10:08:21",
+        "img": [
+          {
+            "url": "/images/ProfilePage/review.jpg",
+            "text": "Delicious dinner!"
+          },
+          {
+            "url": "/images/ProfilePage/review2.jpg",
+            "text": "Wonderful food!"
+          }
+        ],
+        "rating": 4,
+        "text": "Doesn’t look like much when you walk past, but I was practically dying of hunger so I popped in. The definition of a hole-in-the-wall. I got the regular hamburger and wow… there are no words. A classic burger done right. Crisp bun, juicy patty, stuffed with all the essentials (ketchup, shredded lettuce, tomato, and pickles). There’s about a million options available between the menu board and wall full of specials, so it can get a little overwhelming, but you really can’t go wrong. Not much else to say besides go see for yourself! You won’t be disappointed."
+      }
+    }
+  },
+
+
+  {
+    "_id": "44556677",
+    "user": {
+      "_id": "00000000000"
+    },
+    "type": "business-claim",
+    "time_created": "2021-12-3 00:05:40",
+    "claim": {
+      "user": {
+        "_id": "3455555",
+        "firstName": "Monica",
+        "lastName": "Galler",
+        "location": "Brooklyn, NY"
+      },
+      "time_created": "2021-12-3 00:05:40",
+      "file_url": "/images/AdminPage/COVID_Vaccine.pdf",
+      "status": "unprocessed",
+      "restaurant": {
+        "id": "Rv4NgRl-wkMNPNdqXNSGBg",
+        "name": "Shake Shack",
+        "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+        "location": {
+          "address1": "1 Old Fulton St",
+          "address2": "",
+          "address3": "",
+          "city": "Brooklyn",
+          "zip_code": "11201",
+          "country": "US",
+          "state": "NY",
+          "display_address": [
+            "1 Old Fulton St",
+            "Brooklyn, NY 11201"
+          ],
+          "cross_streets": ""
+        },
+        "rating": 3.65,
+        "review_count": 369,
+        "categories": [
+          {
+            "alias": "tradamerican",
+            "title": "American (Traditional)"
+          },
+          {
+            "alias": "icecream",
+            "title": "Ice Cream & Frozen Yogurt"
+          }
+        ],
+        "price": "$$"
+      }
+
+    }
+  }
+]

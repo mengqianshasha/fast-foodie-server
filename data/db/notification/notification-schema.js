@@ -2,14 +2,13 @@
 
 const mongoose = require('mongoose');
 
-const activitySchema = mongoose.Schema({
+const notificationSchema = mongoose.Schema({
                                            user: String,
                                            type: String,
                                            time_created: String,
                                            bookmark: String,
-                                           follow: String,
-                                           review: String,
-                                           replyReview: String
+                                           follower: String,
+                                           review: String
                                        }, {collection: 'activities'});
 
-module.exports = activitySchema;
+module.exports = notificationSchema;

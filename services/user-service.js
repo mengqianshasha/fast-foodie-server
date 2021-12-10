@@ -32,6 +32,7 @@ module.exports = (app) => {
             .then(user => {
                 if (user) {
                     req.session['profile'] = user;
+
                     // Attach user-activities list to session
                     userActivityDao.findActivityByUserIdFromNewest((user['_id']).toString())
                         .then(activities => {

@@ -1,0 +1,102 @@
+[
+  {
+    "_id": "112233",
+    "user": {
+      "_id": 123,
+      "image_url": "/images/ProfilePage/avatar_img.jpg"
+    },
+    "type": "in-message",
+    "time_created": "2021-11-29 11:00:40",
+    "message": {
+      "_id": "555666",
+      "sender": {
+        "_id": 345,
+        "image_url": "https://cdn.pixabay.com/photo/2014/11/13/06/12/boy-529067_960_720.jpg",
+        "firstName": "Mike",
+        "lastName": "Shah",
+        "location": "Los Angelos, CA",
+        "reviewsCount": 12,
+        "followersCount": 2
+      },
+      "receiver": {
+        "_id": 123,
+        "image_url": "/images/ProfilePage/avatar_img.jpg"
+      },
+      "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "time_created": "2021-11-29 11:00:40"
+    }
+  },
+  {
+    "_id": "223344",
+    "user": {
+      "_id": 123,
+      "image_url": "/images/ProfilePage/avatar_img.jpg"
+    },
+    "type": "new-follower",
+    "time_created": "2021-11-28 01:00:40",
+    "follow": {
+      "follower": {
+        "_id": 345,
+        "firstName": "Mike2",
+        "lastName": "Shah",
+        "image_url": "https://cdn.pixabay.com/photo/2014/11/13/06/12/boy-529067_960_720.jpg",
+        "location": "Los Angelos, CA",
+        "reviewsCount": 12,
+        "followersCount": 2
+      },
+      "followee": {
+        "_id": 123,
+        "firstName": "Fangying",
+        "lastName": " Li",
+        "image_url": "/images/ProfilePage/avatar_img.jpg",
+        "location": "Boston, MA",
+        "reviewsCount": 88,
+        "followersCount": 3
+      },
+      "time_created": "2021-11-28 01:00:40"
+    }
+  },
+  {
+    "_id": "334455",
+    "user": {
+      "_id": 123,
+      "image_url": "/images/ProfilePage/avatar_img.jpg"
+    },
+    "type": "update-order",
+    "time_created": "2021-11-28 01:05:40",
+    "order": {
+      "_id": 111222333,
+      "restaurant": {
+        "id": "Rv4NgRl-wkMNPNdqXNSGBg",
+        "name": "Shake Shack",
+        "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg"
+      },
+      "img": "/images/ProfilePage/shake_shack.jpg",
+      "delivery_contact": {
+        "receiver": "Mike Shah",
+        "address": "655 Columbus Street, Boston, MA 02118",
+        "phone": "3234491111"
+      },
+      "time_ordered": "Nov 28, 2021 10:08:21",
+      "cost": 25.58,
+      "itemsCount": 3,
+      "items": [
+        {
+          "name": "Gyoza (6 pcs)",
+          "img_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+          "count": 1,
+          "price": 10.58,
+          "cost": 10.58
+        },
+        {
+          "name": "Tonkotsu Ramen",
+          "img_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+          "count": 2,
+          "price": 7.50,
+          "cost": 10.00
+        }
+      ],
+      "status": "accepted"
+    }
+  }
+]
