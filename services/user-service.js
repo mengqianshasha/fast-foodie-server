@@ -6,6 +6,7 @@ const moment = require('moment')
 const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require(
     "../data/db/user/user-dao");
 const {getYelpDetail} = require("../data/api/yelp-api");
+const {log_axios_error} = require("../utils/error-logger");
 
 module.exports = (app) => {
     const axios = require('axios');
@@ -121,6 +122,7 @@ module.exports = (app) => {
                     req.session['profile'] = profile;
                     res.json(profile);
                 }).catch(e => {
+                    log_axios_error(e);
                     profile = {
                         ...profile,
                         "businessData": {
