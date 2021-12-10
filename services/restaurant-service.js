@@ -1,33 +1,16 @@
-const axios = require('axios');
+const {getYelpDetail} = require("../data/api/yelp-api");
+const {log_axios_error} = require("../utils/error-logger");
 
 module.exports = (app) => {
-    const getAllRestaurants = (req, res) => {
-        axios.get("http://api.yelp.com/v3/businesses/search", {
-          headers: {
-            "Authorization": `Bearer ${process.env.YELP_API_KEY}`
-          },
-          params : {
-            "location": "seattle, WA"
-          }
-        }).then(result => {
-          // console.log(result.data.businesses);
-          res.json(result.data.businesses)
-        })
-      }
-    
     const getRestaurantById = (req, res) => {
         const id = req.params.id;
-        axios.get(`http://api.yelp.com/v3/businesses/${id}`, {
-          headers: {
-            "Authorization": `Bearer ${process.env.YELP_API_KEY}`
-          }
-        }).then(business => {
+        getYelpDetail(id).then(business => {
           res.json(business.data)
+        }).catch((e)=>{
+            log_axios_error(e)
+            res.sendStatus(404);
         })
-
     }
 
-    app.get("/api/restaurants", getAllRestaurants);
     app.get("/api/restaurants/:id", getRestaurantById)
-
 }

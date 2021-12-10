@@ -1,4 +1,5 @@
 const {getYelpSearch, getYelpMatch} = require("../data/api/yelp-api");
+const {log_axios_error} = require("../utils/error-logger");
 
 module.exports = (app) => {
     const searchRestaurants = (req, res) => {
@@ -8,6 +9,7 @@ module.exports = (app) => {
                 res.json(response.data['businesses']);
             })
             .catch((e)=>{
+                log_axios_error(e)
                 res.sendStatus(404);
             })
     }
@@ -18,6 +20,10 @@ module.exports = (app) => {
         getYelpMatch(req.query)
             .then(response=>{
                 res.json(response.data['businesses'][0])
+            })
+            .catch((e)=>{
+                log_axios_error(e)
+                res.sendStatus(404);
             })
     }
 

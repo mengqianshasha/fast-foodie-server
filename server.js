@@ -48,6 +48,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 /********************************Mongoose Configure************************************/
 const mongoose = require('mongoose');
 mongoose.connect(CONSTANTS.MONGODB_URL);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, `Database with url ${CONSTANTS.MONGODB_URL} connection error: `));
+db.once("open", function () {
+    console.log(`Database with url ${CONSTANTS.MONGODB_URL} connected successfully`);
+});
 
 /********************************Session Configure*************************************/
 app.use(session({
@@ -59,9 +64,6 @@ app.use(session({
 
 
 /***********************************Services************************************/
-app.get("/hello", (req, res) => {
-    res.send("Hello World!");
-})
 
 require('./services/user-service')(app);
 require('./services/restaurant-service')(app);
