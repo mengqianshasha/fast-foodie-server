@@ -24,6 +24,7 @@ module.exports = (app) => {
         }).then(business => {
           res.json(business.data)
         })
+
     }
 
     app.get("/api/restaurants", getAllRestaurants);

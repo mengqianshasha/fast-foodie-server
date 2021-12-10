@@ -25,6 +25,10 @@ const updateUser = (user) =>
     $set: user
   });
 
+const updateBusinessData = (userId, businessData) => {
+    return userModel.updateOne({_id: userId}, {$set: {businessData}})
+}
+
 const deleteUser = (userId) =>
   userModel.deleteOne({_id: userId});
 
@@ -81,5 +85,6 @@ module.exports = {
   findByUsername, findAllUsers, findUserById,
   findByUsernameAndPassword, findByRole,
   createUser, updateUser, deleteUser,
-  addToFollowings, deleteFromFollowings, addToFollowers, deleteFromFollowers
+  addToFollowings, deleteFromFollowings, addToFollowers, deleteFromFollowers,
+  updateBusinessData
 };

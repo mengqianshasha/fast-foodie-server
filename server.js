@@ -70,5 +70,6 @@ require('./services/search-service')(app);
 require('./services/auto-completion-service')(app);
 require('./services/activity-service')(app);
 require('./services/review-service')(app);
+require('./services/claim-service')(app);
 
 app.listen(process.env.PORT || 8000);
