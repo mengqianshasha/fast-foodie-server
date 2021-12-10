@@ -1,26 +1,25 @@
  // NOTED: Must use the real user/review/... id in the database
 
-const model = require('./activity-model');
+const model = require('./notification-model');
 
-const findAllActivitiesFromNewest = () =>
+const findAllNotificationsFromNewest = () =>
     model.find().sort({_id: -1});
 
-const findActivityById = (activityId) =>
-    model.findById(activityId);
+const findNotificationById = (notificationId) =>
+    model.findById(notificationId);
 
-const findActivityByUserIdFromNewest = (userId) => {
+const findNotificationByUserIdFromNewest = (userId) => {
     return model.find({"user": userId}).sort({_id: -1});
 }
 
+const createNotification = (notification) =>
+    model.create(notification);
 
-const createActivity = (activity) =>
-    model.create(activity);
-
-const deleteActivity = (activityId) =>
-    model.deleteOne({_id: reviewId});
+const deleteNotification = (notificationId) =>
+    model.deleteOne({_id: notificationId});
 
 module.exports = {
-    findAllActivitiesFromNewest, findActivityById,
-    findActivityByUserIdFromNewest,
-    createActivity, deleteActivity
+    findAllNotificationsFromNewest, findNotificationById,
+    findNotificationByUserIdFromNewest,
+    createNotification, deleteNotification
 };

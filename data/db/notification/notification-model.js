@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const schema = require('./activity-schema');
+const schema = require('./notification-schema');
 const notificationModel = mongoose
-  .model('ActivityModel', schema);
+  .model('NotificationModel', schema);
 module.exports = notificationModel;
