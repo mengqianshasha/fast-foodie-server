@@ -22,9 +22,13 @@ module.exports = (app) => {
     reviewDao.updateReview(req.params.reviewId, req.body).then(status => res.send(status))
   }
 
+  const updateReply = (req, res) => {
+    reviewDao.updateReview(req.params.reviewId, req.body).then(status => res.send(status))
+  }
+
   app.get('/api/:restaurantId/reviews', findAllReviews);
   app.post('/api/reviews', postNewReview);
   app.delete('/api/reviews/:reviewId', deleteReview);
   app.put('/api/reviews/:reviewId', saveReview);
-
+  app.put('/api/reviews/:reviewId/reply', updateReply);
 };

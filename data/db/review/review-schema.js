@@ -11,6 +11,13 @@ const reviewSchema = mongoose.Schema({
                                              url: String,
                                              text: String
                                          }],
+                                          userInfo: {
+                                           username: String,
+                                           avatar_url: String,
+                                            location: String,
+                                            reviewNum: Number,
+                                            friendNum: Number,
+                                          },
                                          replies: [{
                                              user: String,
                                              text: String,
