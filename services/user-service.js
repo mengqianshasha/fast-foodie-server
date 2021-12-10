@@ -1,8 +1,9 @@
 const userDao = require('../data/db/user/user-dao');
 const userActivityDao = require('../data/db/activity/activity-dao')
 const moment = require('moment')
-const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require(
-    "../data/db/user/user-dao");
+
+const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require("../data/db/user/user-dao");
+const {getYelpDetail} = require("../data/api/yelp-api");
 
 module.exports = (app) => {
     const axios = require('axios');
@@ -92,11 +93,7 @@ module.exports = (app) => {
             // If first query business profile, fetch the restaurant JSON
             else {
                 const restaurantId = profile.businessData.restaurant;
-                axios.get(`http://api.yelp.com/v3/businesses/${restaurantId}`, {
-                    headers: {
-                        "Authorization": `Bearer ${process.env.YELP_API_KEY}`
-                    }
-                }).then(business => {
+                getYelpDetail(restaurantId).then(business => {
                     profile = {
                         ...profile,
                         "businessData": {

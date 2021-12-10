@@ -110,11 +110,6 @@ module.exports = (app) => {
             })
     }
 
-
-
-
-
-
 app.get("/api/activities/all", getAllCustomerActivities);
 app.get("/api/activities/nearby", getNearbyCustomerActivities);
 app.get("/api/activities/following", getFollowingCustomerActivities);
