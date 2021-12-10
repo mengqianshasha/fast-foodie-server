@@ -1,0 +1,50 @@
+[
+  {
+    "user": "61ad3e7b5ca832c2d20d0670",
+    "type": "new-follower",
+    "time_created": "2021-12-02 10:08:21",
+    "follower": "61ae1ca569b9de461bfc141b"
+  },
+
+  {
+    "user": "61ad3e7b5ca832c2d20d0670",
+    "type": "new-follower",
+    "time_created": "2021-12-10 08:08:21",
+    "follower": "61adba802e691a0b81929ded"
+  },
+
+  {
+    "user": "61ae23205ca832c2d20d0672",
+    "type": "new-review",
+    "time_created": "2021-11-28 10:08:21",
+    "review": "61b230e8ce57907b9a43eb2a"
+  },
+
+  {
+    "user": "61ae23205ca832c2d20d0672",
+    "type": "new-review",
+    "time_created": "2021-12-09 10:08:21",
+    "review": "61b2e64fce57907b9a43eb2f"
+  },
+
+  {
+    "user": "61ae23205ca832c2d20d0672",
+    "type": "new-review",
+    "time_created": "2021-12-09 22:08:21",
+    "review": "61b2e6fdce57907b9a43eb30"
+  },
+
+  {
+    "user": "61b369cdce57907b9a43eb34",
+    "type": "new-claim",
+    "time_created": "2021-12-09 22:08:21",
+    "claim": "61b374bdce57907b9a43eb38"
+  },
+
+  {
+    "user": "61b369cdce57907b9a43eb34",
+    "type": "new-claim",
+    "time_created": "2021-12-01 22:08:21",
+    "claim": "61b374cbce57907b9a43eb39"
+  }
+]

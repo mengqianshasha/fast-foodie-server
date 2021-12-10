@@ -25,6 +25,12 @@
     "type": "reply-review",
     "time_created": "2021-12-10 00:20:21",
     "replyReview": "61b2e6fdce57907b9a43eb30"
-  }
+  },
 
+  {
+    "user": "61ad3e7b5ca832c2d20d0670",
+    "type": "follow",
+    "time_created": "2021-12-10 12:08:21",
+    "follow": "61ae1ca569b9de461bfc141b"
+  }
 ]

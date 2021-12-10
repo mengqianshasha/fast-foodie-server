@@ -57,5 +57,35 @@
       "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
       "file_url": "http://www.africau.edu/images/default/sample.pdf"
     }
+  },
+
+  {
+    "role": "admin",
+    "username": "admin@123.com",
+    "password": "admin",
+    "email": "admin@123.com",
+    "firstName": "Admin",
+    "lastName": "AA",
+    "image_url": "",
+    "location": "",
+    "addressDetail" : "",
+    "birthday": "",
+    "dateJoined": "2010-9-1",
+    "customerData": {
+      "reviews": [],
+      "followings": [],
+      "followers": [],
+      "bookmarks": [],
+      "visibility": {
+        "location": true,
+        "birthday": true,
+        "bookmarks": true
+      }
+    },
+    "businessData": {
+      "verified": false,
+      "restaurant": "",
+      "file_url": ""
+    }
   }
 ]

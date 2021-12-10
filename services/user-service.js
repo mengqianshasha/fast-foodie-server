@@ -1,8 +1,10 @@
 const userDao = require('../data/db/user/user-dao');
 const userActivityDao = require('../data/db/activity/activity-dao')
+const userNotificationDao = require('../data/db/notification/notification-dao')
 const moment = require('moment')
 
-const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require("../data/db/user/user-dao");
+const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollowers} = require(
+    "../data/db/user/user-dao");
 const {getYelpDetail} = require("../data/api/yelp-api");
 
 module.exports = (app) => {
@@ -36,9 +38,23 @@ module.exports = (app) => {
                     // Attach user-activities list to session
                     userActivityDao.findActivityByUserIdFromNewest((user['_id']).toString())
                         .then(activities => {
-                            req.session['userActivities'] = activities;
-                            res.json(user);
-                        });
+                            req.session['userActivities'] = activities.length > 10
+                                                            ? activities.slice(0, 10) : activities;
+                        })
+
+                        // Attach user-notifications list to session
+                        .then(status => {
+                            userNotificationDao.findNotificationByUserIdFromNewest(user['_id'].toString())
+                                .then(
+                                    notifications => {
+                                        req.session['userNotifications'] =
+                                            notifications.length > 10
+                                            ? notifications.slice(0, 10) : notifications
+                                        res.json(user);
+                                    }
+                                )
+                        })
+
                 } else {
                     res.sendStatus(403);
                 }
@@ -87,8 +103,8 @@ module.exports = (app) => {
 
         /**********************************Business owner*********************************/
         if (profile !== undefined && profile.role === "business") {
-            // If restaurant already stored in session
-            if (profile.businessData.restaurant.name) {
+            // If restaurant already stored in session, or user is unverified
+            if (profile.businessData.restaurant.name || !profile.businessData.verified) {
                 res.json(profile);
             }
             // If first query business profile, fetch the restaurant JSON

@@ -1,0 +1,33 @@
+[
+  {
+    "user": "61ae23205ca832c2d20d0672",
+    "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
+    "time_created": "2021-10-01 22:08:21",
+    "file_url": "http://www.africau.edu/images/default/sample.pdf",
+    "status": "declined"
+  },
+
+  {
+    "user": "61ae23205ca832c2d20d0672",
+    "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
+    "time_created": "2021-11-01 22:08:21",
+    "file_url": "http://www.africau.edu/images/default/sample.pdf",
+    "status": "accepted"
+  },
+
+  {
+    "user": "61ae349cde20bb8f70592259",
+    "restaurant": "V7lXZKBDzScDeGB8JmnzSA",
+    "time_created": "2021-12-01 22:08:21",
+    "file_url": "http://www.africau.edu/images/default/sample.pdf",
+    "status": "unprocessed"
+  },
+
+  {
+    "user": "61b36aa6398d2167256b324b",
+    "restaurant": "xEnNFXtMLDF5kZDxfaCJgA",
+    "time_created": "2021-12-09 22:08:21",
+    "file_url": "http://www.africau.edu/images/default/sample.pdf",
+    "status": "unprocessed"
+  }
+]
