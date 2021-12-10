@@ -15,8 +15,27 @@ module.exports = (app) => {
         if (profile !== undefined) {
             findClaimByUser(req.session['profile']['_id'])
                 .then(response => {
-                    res.json(response[0]);
+                    if (response === undefined || response.length === 0) {
+                        res.json({});
+                    } else {
+                        const claim = response[0];
+                        if (claim.status === "approved") {
+                            req.session['profile'] = {
+                                ...req.session['profile'],
+                                businessData: {
+                                    ...req.session['profile']['businessData'],
+                                    verified: true,
+                                    restaurant: claim.restaurant,
+                                }
+                            }
+                            req.session.save();
+                        }
+                        res.json(claim);
+                    }
+
                 })
+        } else {
+            res.json({});
         }
 
     }
