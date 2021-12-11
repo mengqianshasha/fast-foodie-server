@@ -1,4 +1,5 @@
 const reviewDao = require('../data/db/review/review-dao');
+const userDao = require('../data/db/user/user-dao')
 const moment = require('moment')
 
 module.exports = (app) => {
@@ -76,7 +77,15 @@ module.exports = (app) => {
     }
 
     const findAllReviewsByUserId = (req, res) => {
-
+        const userId = req.params.userId;
+        userDao.findUserById(userId)
+            .then(user => {
+                findAllReviewsByIdsAsync(user.customerData.reviews)
+                    .then(reviewsInfo => {
+                        console.log(reviewsInfo);
+                        res.json(reviewsInfo);
+                    })
+            })
     }
 
     app.get('/api/:restaurantId/reviews', findAllReviews);
