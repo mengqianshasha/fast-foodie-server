@@ -17,6 +17,32 @@ module.exports = (app) => {
     const user333 = "61b01b5da49c6aa973522eab";
 
 
+    const transformReviews2 = (reviews) => {
+
+        return reviews.map(review => {
+            return (
+                {
+                    type: "review",
+                    user: {
+                        _id: review.user,
+                        name: review.userInfo.name,
+                        img_url: review.userInfo.avatar_url
+                    },
+                    restaurant: {
+                        _id: review['restaurant'],
+                        name: review.restaurantInfo.name,
+                        img_url: review.restaurantInfo.image_url
+                    },
+                    review: {
+                        _id: review['_id'],
+                        text: review['text'],
+                        rating: review['rating'],
+                        photo_url: ("img" in review && review['img'].length !== 0) ? review['img'][0]['url'] : ''
+                    }
+                }
+            )
+        })
+    }
     const transformReviews = async (reviews) => {
 
         let result = [];
@@ -69,10 +95,8 @@ module.exports = (app) => {
     const getAllCustomerActivities = (req, res) => {
         findAllReviewsFromNewest()
             .then(reviews => {
-                transformReviews(reviews)
-                    .then(response => {
-                        res.json(response)
-                    })
+                const result = transformReviews2(reviews);
+                res.json(result);
             })
     }
 
@@ -85,13 +109,10 @@ module.exports = (app) => {
         } else {
             findReviewsByLocationExcludeUser(user.location, user._id)
                 .then(reviews => {
-                    transformReviews(reviews)
-                        .then(result => {
-                            res.json(result);
-                        })
+                    const result = transformReviews2(reviews);
+                    res.json(result);
                 })
         }
-
     }
 
 
@@ -103,12 +124,11 @@ module.exports = (app) => {
         }
         findReviewsByIdsFromNewest(user.customerData['followings'])
             .then(reviews => {
-                transformReviews(reviews)
-                    .then(result => {
-                        res.json(result);
-                    })
+                const result = transformReviews2(reviews);
+                res.json(result);
             })
     }
+
 
 app.get("/api/activities/all", getAllCustomerActivities);
 app.get("/api/activities/nearby", getNearbyCustomerActivities);
