@@ -40,8 +40,13 @@ module.exports = (app) => {
                     // Attach user-activities list to session
                     userActivityDao.findActivityByUserIdFromNewest((user['_id']).toString())
                         .then(activities => {
-                            req.session['userActivities'] = activities.length > 10
-                                                            ? activities.slice(0, 10) : activities;
+                            if (activities) {
+                                req.session['userActivities'] = activities.length > 10
+                                                                ? activities.slice(0, 10) : activities;
+                            } else {
+                                req.session['userActivities'] = [];
+                            }
+
                         })
 
                         // Attach user-notifications list to session
@@ -50,9 +55,13 @@ module.exports = (app) => {
                                 user['_id'].toString())
                                 .then(
                                     notifications => {
-                                        req.session['userNotifications'] =
-                                            notifications.length > 10
-                                            ? notifications.slice(0, 10) : notifications
+                                        if (notifications) {
+                                            req.session['userNotifications'] =
+                                                notifications.length > 10
+                                                ? notifications.slice(0, 10) : notifications;
+                                        } else {
+                                            req.session['userNotifications'] = [];
+                                        }
                                         res.json(user);
                                     }
                                 )
@@ -182,20 +191,19 @@ module.exports = (app) => {
             })
     }
 
-    const findUserByIdAsync = async (followingsId) => {
-        let followingsInfo = [];
-        for (let i = 0; i < followingsId.length; i++) {
-            const userId = followingsId[i];
+    const findUserByIdAsync = async (usersId) => {
+        let usersInfo = [];
+        for (let i = 0; i < usersId.length; i++) {
+            const userId = usersId[i];
             let userInfo = {};
             try {
                 userInfo = await userDao.findUserById(userId).exec();
-                /*console.log(userInfo);*/
             } catch (e) {
                 console.log(e);
             }
-            followingsInfo.push(userInfo);
+            usersInfo.push(userInfo);
         }
-        return followingsInfo;
+        return usersInfo;
     }
 
     const findFollowings = (req, res) => {
@@ -209,7 +217,13 @@ module.exports = (app) => {
     }
 
     const findFollowers = (req, res) => {
-
+        const followersId = req.session['profile']['customerData']['followers'];
+        /*console.log(followersId);*/
+        findUserByIdAsync(followersId)
+            .then(followersInfo => {
+                /*console.log(followersInfo);*/
+                res.json(followersInfo);
+            })
     }
 
     app.post('/api/login', login);
