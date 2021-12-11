@@ -104,15 +104,15 @@ module.exports = (app) => {
 // get activities of those who are in the same city with the logged-in user
     const getNearbyCustomerActivities = (req, res) => {
         const user = req.session['profile'];
-        if (user === undefined) {
-            res.json({});
-        } else {
+
             findReviewsByLocationExcludeUser(user.location, user._id)
                 .then(reviews => {
                     const result = transformReviews2(reviews);
                     res.json(result);
                 })
-        }
+                .catch(e => {
+                    res.sendStatus(404);
+                })
     }
 
 
