@@ -135,11 +135,7 @@ module.exports = (app) => {
                 })
             }
         }
-            /*        else if (profile !== undefined && profile.role === "customer") {
-
-                    }*/
-
-        /**********************************Customer User*********************************/
+        /**********************************Other User*********************************/
         else {
             res.json(profile);
         }

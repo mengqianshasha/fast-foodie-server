@@ -10,22 +10,21 @@ module.exports = (app) => {
         let updatedRecentActs;
         // if the session doesn't have detail information
         if (!activities[0]['reviewDetail'] && !activities[0]['followDetail']) {
-            updatedRecentActs = newFetchedActivities.length > 10 ? newFetchedActivities.slice(0, 10) : newFetchedActivities;
-            updatedRecentActs = updatedRecentActs.map(act => act['_doc']);
+            updatedRecentActs = newFetchedActivities.map(act => act['_doc']);
         }
         // Combine new fetched activities with previous activities
         else {
             const currentActivitiesId = activities.map(act => act['_id'].toString());
             let actualNewActivities = newFetchedActivities.filter(newAct =>
                                                                         !currentActivitiesId.includes(
-                                                                            newAct['_doc']['_id'].toString()))
-            console.log("Filtered new acts: ");
-            console.log(actualNewActivities);
+                                                                            newAct['_doc']['_id'].toString()));
+           /* console.log("Filtered new acts: ");
+            console.log(actualNewActivities);*/
             actualNewActivities = actualNewActivities.map(act => act['_doc']);
             let updatedActivities = [...actualNewActivities, ...activities];
             updatedRecentActs = updatedActivities.length > 10 ? updatedActivities.slice(0, 10) : updatedActivities;
-            console.log("Actual new acts to find details: ");
-            console.log(updatedRecentActs);
+            /*console.log("Actual new acts to find details: ");
+            console.log(updatedRecentActs);*/
         }
 
         // Add detail information into each activity
@@ -34,7 +33,9 @@ module.exports = (app) => {
             const activity = updatedRecentActs[i];
 
             let activityDetail = {...activity};
+            /*****************************Review Activity******************************/
             if (activity.type === "review") {
+                // If this activity already has detail, jump to next activity
                 if (activity.reviewDetail) {
                     newActivities.push(activity);
                     continue;
@@ -45,7 +46,7 @@ module.exports = (app) => {
                     const findReviewDetail = await reviewDao.findReviewById(activity['review'])
                         .exec();
                     // I don't know why, but the returned data is inside '_doc' property
-                    reviewDetail = findReviewDetail['_doc']
+                    reviewDetail = findReviewDetail['_doc'];
                 } catch (e) {
                     console.log(e)
                 }
@@ -71,7 +72,10 @@ module.exports = (app) => {
                     ...activityDetail,
                     "reviewDetail": reviewDetail
                 }
-            } else if (activity.type === "follow") {
+            }
+            /*****************************Follow Activity******************************/
+            else if (activity.type === "follow") {
+                // If this activity already has detail, jump to next activity
                 if (activity.followDetail) {
                     newActivities.push(activity);
                     continue;
@@ -87,7 +91,10 @@ module.exports = (app) => {
                     ...activityDetail,
                     "followDetail": followee
                 }
-            } else if (activity.type === "reply-review") {
+            }
+            /*****************************Reply Review Activity******************************/
+            else if (activity.type === "reply-review") {
+                // If this activity already has detail, jump to next activity
                 if (activity.reviewDetail) {
                     newActivities.push(activity);
                     continue;
@@ -122,7 +129,6 @@ module.exports = (app) => {
                     "reviewDetail": reviewDetail
                 }
             }
-
             newActivities.push(activityDetail);
         }
         return newActivities;
@@ -134,7 +140,7 @@ module.exports = (app) => {
 
         userActivityDao.findActivityByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedActivities => {
-                console.log(newFetchedActivities);
+                /*console.log(newFetchedActivities);*/
 
                 // if newFetched activities are empty, do nothing and return the session
                 if (newFetchedActivities.length === 0) {
@@ -153,10 +159,10 @@ module.exports = (app) => {
                 let newFetchedRecentActs = newFetchedActivities.length > 10 ?
                                            newFetchedActivities.slice(0, 10) : newFetchedActivities;
 
-
                 findActivityDetail(activities, newFetchedRecentActs)
                     .then(newActsDetail => {
-                        console.log(newActsDetail);
+                        /*console.log(newActsDetail);*/
+
                         // Update the session with the new activitiesDetail
                         req.session['userActivities'] = newActsDetail;
                         res.json(newActsDetail);

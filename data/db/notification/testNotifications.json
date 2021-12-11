@@ -46,5 +46,12 @@
     "type": "new-claim",
     "time_created": "2021-12-01 22:08:21",
     "claim": "61b374cbce57907b9a43eb39"
+  },
+
+  {
+    "user": "61b369cdce57907b9a43eb34",
+    "type": "new-claim",
+    "time_created": "2021-12-10 12:08:21",
+    "claim": "61b4034cce57907b9a43eb50"
   }
 ]

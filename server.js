@@ -53,6 +53,7 @@ require('./services/auto-completion-service')(app);
 require('./services/activity-service')(app);
 require('./services/review-service')(app);
 require('./services/userActivity-service')(app);
+require('./services/userNotification-service')(app);
 require('./services/claim-service')(app);
 
 
