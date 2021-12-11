@@ -1,10 +1,21 @@
 const {createClaim, findClaimByUser, findAllClaims, findClaimById, approveClaimById, denyClaimById} = require("../data/db/claim/claim-dao");
 const {updateBusinessData} = require("../data/db/user/user-dao");
+const {createNotification} = require("../data/db/notification/notification-dao");
 module.exports = (app) => {
+
     const claimBusiness = (req, res) => {
-        createClaim(req.body)
+        const claim = req.body;
+        createClaim(claim)
             .then(response => {
-                res.sendStatus("200");
+                createNotification({
+                    user: "61b27099141351ab03bf256a",
+                    type: "new-claim",
+                    time_created: claim.time_created,
+                    claim: claim._id
+                })
+                    .then(noti => {
+                        res.sendStatus("200");
+                    })
             })
     }
  
