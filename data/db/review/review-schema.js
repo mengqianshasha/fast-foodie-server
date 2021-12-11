@@ -13,11 +13,16 @@ const reviewSchema = mongoose.Schema({
                                          }],
                                           userInfo: {
                                            username: String,
+                                           name: String,
                                            avatar_url: String,
                                             location: String,
                                             reviewNum: Number,
                                             friendNum: Number,
                                           },
+                                         restaurantInfo: {
+                                             name: String,
+                                             image_url: String
+                                         },
                                          replies: [{
                                              user: String,
                                              text: String,
