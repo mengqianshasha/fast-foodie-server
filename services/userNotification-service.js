@@ -67,7 +67,7 @@ module.exports = (app) => {
 
                     console.log("Found review detail");
                     console.log(findReviewDetail);
-                    // I don't know why, but the returned data is inside '_doc' property
+                    // exec() return a bunch of things, the returned data is inside '_doc' property
                     reviewDetail = findReviewDetail['_doc']
                 } catch (e) {
                     console.log(e)

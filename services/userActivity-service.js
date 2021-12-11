@@ -45,7 +45,7 @@ module.exports = (app) => {
                 try {
                     const findReviewDetail = await reviewDao.findReviewById(activity['review'])
                         .exec();
-                    // I don't know why, but the returned data is inside '_doc' property
+                    // exec() return a bunch of things, the object is inside '_doc' property
                     reviewDetail = findReviewDetail['_doc'];
                 } catch (e) {
                     console.log(e)
@@ -104,7 +104,7 @@ module.exports = (app) => {
                 try {
                     const findReviewDetail = await reviewDao.findReviewById(activity['replyReview'])
                         .exec();
-                    // I don't know why, but the returned data is inside '_doc' property
+                    // exec() return a bunch of things, the object is inside '_doc' property
                     reviewDetail = findReviewDetail['_doc']
                 } catch (e) {
                     console.log(e)
