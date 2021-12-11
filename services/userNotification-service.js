@@ -64,9 +64,9 @@ module.exports = (app) => {
                 try {
                     const findReviewDetail = await reviewDao.findReviewById(notification['review'])
                         .exec();
+                    /*console.log("Found review detail");
+                    console.log(findReviewDetail);*/
 
-                    console.log("Found review detail");
-                    console.log(findReviewDetail);
                     // exec() return a bunch of things, the returned data is inside '_doc' property
                     reviewDetail = findReviewDetail['_doc']
                 } catch (e) {
@@ -154,7 +154,7 @@ module.exports = (app) => {
 
         userNotificationDao.findNotificationByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedNotis => {
-                console.log(newFetchedNotis);
+                /*console.log(newFetchedNotis);*/
 
                 // if newFetched notifications are empty, do nothing and return the session
                 if (newFetchedNotis.length === 0) {
@@ -177,7 +177,7 @@ module.exports = (app) => {
 
                 findNotificationDetail(notifications, newFetchedRecentNotis)
                     .then(newNotisDetail => {
-                        console.log(newNotisDetail);
+                        /*console.log(newNotisDetail);*/
 
                         req.session['userNotifications'] = newNotisDetail;
                         res.json(newNotisDetail);

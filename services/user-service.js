@@ -21,6 +21,7 @@ module.exports = (app) => {
                 res.json(user)
             })
     }
+
     const deleteUser = (req, res) =>
         userDao.deleteUser(req.params.userId)
             .then(status => req.send(status));
@@ -45,7 +46,8 @@ module.exports = (app) => {
 
                         // Attach user-notifications list to session
                         .then(status => {
-                            userNotificationDao.findNotificationByUserIdFromNewest(user['_id'].toString())
+                            userNotificationDao.findNotificationByUserIdFromNewest(
+                                user['_id'].toString())
                                 .then(
                                     notifications => {
                                         req.session['userNotifications'] =
@@ -180,6 +182,36 @@ module.exports = (app) => {
             })
     }
 
+    const findUserByIdAsync = async (followingsId) => {
+        let followingsInfo = [];
+        for (let i = 0; i < followingsId.length; i++) {
+            const userId = followingsId[i];
+            let userInfo = {};
+            try {
+                userInfo = await userDao.findUserById(userId).exec();
+                /*console.log(userInfo);*/
+            } catch (e) {
+                console.log(e);
+            }
+            followingsInfo.push(userInfo);
+        }
+        return followingsInfo;
+    }
+
+    const findFollowings = (req, res) => {
+        const followingsId = req.session['profile']['customerData']['followings'];
+        console.log(followingsId);
+        findUserByIdAsync(followingsId)
+            .then(followingsInfo => {
+                /*console.log(followingsInfo);*/
+                res.json(followingsInfo);
+            })
+    }
+
+    const findFollowers = (req, res) => {
+
+    }
+
     app.post('/api/login', login);
     app.post('/api/register', register);
     app.post('/api/profile', profile);
@@ -193,4 +225,7 @@ module.exports = (app) => {
     app.put('/api/follow', follow);
     app.put('/api/unfollow', unfollow);
     app.get('/api/session', getSession);
+    app.post('/api/allFollowings', findFollowings);
+    app.post('/api/allFollowers', findFollowers);
+
 };
