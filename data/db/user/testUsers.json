@@ -12,7 +12,7 @@
     "birthday": "2021-11-1",
     "dateJoined": "2019-9-1",
     "customerData": {
-      "reviews": [],
+      "reviews": ["61b230e8ce57907b9a43eb2a", "61b2e64fce57907b9a43eb2f"],
       "followings": [],
       "followers": [],
       "bookmarks": [],

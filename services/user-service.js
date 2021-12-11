@@ -200,7 +200,7 @@ module.exports = (app) => {
 
     const findFollowings = (req, res) => {
         const followingsId = req.session['profile']['customerData']['followings'];
-        console.log(followingsId);
+        /*console.log(followingsId);*/
         findUserByIdAsync(followingsId)
             .then(followingsInfo => {
                 /*console.log(followingsInfo);*/

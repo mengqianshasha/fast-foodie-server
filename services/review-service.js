@@ -26,6 +26,53 @@ module.exports = (app) => {
     reviewDao.updateReview(req.params.reviewId, req.body).then(status => res.send(status))
   }
 
+
+  const findAllReviewsByIdsAsync = async (reviewsId) => {
+    let reviewsInfo = [];
+    for (let i = 0; i < reviewsId.length; i++) {
+      const reviewId = reviewsId[i];
+      let reviewInfo = {};
+      try {
+        const findReviewInfo = await reviewDao.findReviewById(reviewId).exec();
+        reviewInfo = findReviewInfo['_doc'];
+      } catch (e) {
+        console.log(e)
+      }
+      // Retrieve restaurant data of this review
+      try {
+        const restaurantId = reviewInfo['restaurant'];
+        const business = await axios.get(
+            `http://api.yelp.com/v3/businesses/${restaurantId}`, {
+              headers: {
+                "Authorization": `Bearer ${process.env.YELP_API_KEY}`
+              }
+            })
+        reviewInfo = {
+          ...reviewInfo,
+          "restaurantDetail": {...business.data}
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      reviewsInfo.push(reviewInfo);
+    }
+    return reviewsInfo;
+  }
+
+
+
+  const findAllReviewsByUser = (req, res) => {
+    const reviewsId = req.session['profile']['customerData']['reviews'];
+    console.log(reviewsId);
+    findAllReviewsByIdsAsync(reviewsId)
+        .then(reviewsInfo => {
+          console.log(reviewsInfo);
+          res.json(reviewsInfo);
+        })
+  }
+
+
+
   app.get('/api/:restaurantId/reviews', findAllReviews);
   app.post('/api/reviews', postNewReview);
   app.delete('/api/reviews/:reviewId', deleteReview);
