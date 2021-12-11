@@ -182,25 +182,24 @@ module.exports = (app) => {
             })
     }
 
-    const findUserByIdAsync = async (followingsId) => {
-        let followingsInfo = [];
-        for (let i = 0; i < followingsId.length; i++) {
-            const userId = followingsId[i];
+    const findUserByIdAsync = async (usersId) => {
+        let usersInfo = [];
+        for (let i = 0; i < usersId.length; i++) {
+            const userId = usersId[i];
             let userInfo = {};
             try {
                 userInfo = await userDao.findUserById(userId).exec();
-                /*console.log(userInfo);*/
             } catch (e) {
                 console.log(e);
             }
-            followingsInfo.push(userInfo);
+            usersInfo.push(userInfo);
         }
-        return followingsInfo;
+        return usersInfo;
     }
 
     const findFollowings = (req, res) => {
         const followingsId = req.session['profile']['customerData']['followings'];
-        console.log(followingsId);
+        /*console.log(followingsId);*/
         findUserByIdAsync(followingsId)
             .then(followingsInfo => {
                 /*console.log(followingsInfo);*/
@@ -209,8 +208,15 @@ module.exports = (app) => {
     }
 
     const findFollowers = (req, res) => {
-
+        const followersId = req.session['profile']['customerData']['followers'];
+        console.log(followersId);
+        findUserByIdAsync(followersId)
+            .then(followersInfo => {
+                console.log(followersInfo);
+                res.json(followersInfo);
+            })
     }
+
 
     app.post('/api/login', login);
     app.post('/api/register', register);
