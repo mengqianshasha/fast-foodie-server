@@ -12,7 +12,6 @@ const findActivityByUserIdFromNewest = (userId) => {
     return model.find({"user": userId}).sort({_id: -1});
 }
 
-
 const createActivity = (activity) =>
     model.create(activity);
 

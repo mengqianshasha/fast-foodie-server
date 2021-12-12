@@ -26,9 +26,14 @@ module.exports = (app) => {
         userDao.deleteUser(req.params.userId)
             .then(status => req.send(status));
 
+
     const updateUser = (req, res) =>
         userDao.updateUser(req.body)
-            .then(status => req.send(status));
+            .then(status => {
+                req.session['profile'] = req.body;
+                res.send(status);
+            });
+
 
     // TODO: Add notifications, activities, reviews, bookmarks into profile later
     const login = (req, res) => {
@@ -46,7 +51,6 @@ module.exports = (app) => {
                             } else {
                                 req.session['userActivities'] = [];
                             }
-
                         })
 
                         // Attach user-notifications list to session
@@ -66,7 +70,6 @@ module.exports = (app) => {
                                     }
                                 )
                         })
-
                 } else {
                     res.sendStatus(403);
                 }
@@ -109,6 +112,7 @@ module.exports = (app) => {
                     });
             })
     }
+
 
     const profile = (req, res) => {
         let profile = req.session['profile'];
@@ -160,8 +164,10 @@ module.exports = (app) => {
             })
     }
 
+
     const logout = (req, res) =>
         res.send(req.session.destroy());
+
 
     const follow = (req, res) => {
         const followeeId = req.body['followeeId'];
@@ -175,6 +181,7 @@ module.exports = (app) => {
                     })
             })
     }
+
 
     const unfollow = (req, res) => {
         const followeeId = req.body['followeeId'];
@@ -190,6 +197,7 @@ module.exports = (app) => {
                     })
             })
     }
+
 
     const findUserByIdAsync = async (usersId) => {
         let usersInfo = [];

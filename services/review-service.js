@@ -82,7 +82,7 @@ module.exports = (app) => {
             .then(user => {
                 findAllReviewsByIdsAsync(user.customerData.reviews)
                     .then(reviewsInfo => {
-                        console.log(reviewsInfo);
+                        /*console.log(reviewsInfo);*/
                         res.json(reviewsInfo);
                     })
             })
