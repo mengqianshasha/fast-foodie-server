@@ -12,7 +12,7 @@
     "birthday": "2021-11-1",
     "dateJoined": "2019-9-1",
     "customerData": {
-      "reviews": [],
+      "reviews": ["61b230e8ce57907b9a43eb2a", "61b2e64fce57907b9a43eb2f"],
       "followings": [],
       "followers": [],
       "bookmarks": [],
@@ -65,6 +65,36 @@
     "password": "admin",
     "email": "admin@123.com",
     "firstName": "Admin",
+    "lastName": "AA",
+    "image_url": "",
+    "location": "",
+    "addressDetail" : "",
+    "birthday": "",
+    "dateJoined": "2010-9-1",
+    "customerData": {
+      "reviews": [],
+      "followings": [],
+      "followers": [],
+      "bookmarks": [],
+      "visibility": {
+        "location": true,
+        "birthday": true,
+        "bookmarks": true
+      }
+    },
+    "businessData": {
+      "verified": false,
+      "restaurant": "",
+      "file_url": ""
+    }
+  },
+
+  {
+    "role": "admin",
+    "username": "admin2@123.com",
+    "password": "admin2",
+    "email": "admin2@123.com",
+    "firstName": "Admin2",
     "lastName": "AA",
     "image_url": "",
     "location": "",
