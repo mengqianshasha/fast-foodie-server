@@ -11,14 +11,15 @@ module.exports = (app) => {
                     user: "61b27099141351ab03bf256a",
                     type: "new-claim",
                     time_created: claim.time_created,
-                    claim: claim._id
+                    claim: response._id
                 })
                     .then(noti => {
+                        console.log(noti);
                         res.sendStatus("200");
                     })
             })
     }
- 
+
 
     const getClaim = (req, res) => {
 
