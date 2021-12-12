@@ -7,6 +7,8 @@ const {addToFollowings, addToFollowers, deleteFromFollowings, deleteFromFollower
     "../data/db/user/user-dao");
 const {getYelpDetail} = require("../data/api/yelp-api");
 const {log_axios_error} = require("../utils/error-logger");
+const {createNotification} = require("../data/db/notification/notification-dao");
+const {createActivity} = require("../data/db/activity/activity-dao");
 
 module.exports = (app) => {
     const axios = require('axios');
@@ -189,8 +191,25 @@ module.exports = (app) => {
             .then(response => {
                 addToFollowers(followeeId, userId)
                     .then(state => {
-                        req.session['profile']['customerData']['followings'].push(followeeId);
-                        res.sendStatus(200);
+                        createNotification({
+                            user: followeeId,
+                            type: 'new-follower',
+                            time_created: moment().format('YYYY-MM-DD h:mm:ss'),
+                            follower: userId
+                        })
+                            .then(noti => {
+                                createActivity({
+                                    user: userId,
+                                    type: 'follow',
+                                    time_created: moment().format('YYYY-MM-DD h:mm:ss'),
+                                    follow: followeeId
+                                })
+                                    .then(acti => {
+                                        req.session['profile']['customerData']['followings'].push(followeeId);
+                                        res.sendStatus(200);
+                                    })
+                            })
+
                     })
             })
     }
