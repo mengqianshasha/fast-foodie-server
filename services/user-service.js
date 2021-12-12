@@ -26,14 +26,29 @@ module.exports = (app) => {
         userDao.deleteUser(req.params.userId)
             .then(status => req.send(status));
 
-
-    const updateUser = (req, res) =>
-        userDao.updateUser(req.body)
-            .then(status => {
-                req.session['profile'] = req.body;
-                res.send(status);
-            });
-
+    const updateUser = (req, res) => {
+            const newUser = req.body;
+            if (newUser.role !== "business") {
+                userDao.updateUser(newUser)
+                    .then(status => {
+                        req.session['profile'] = req.body;
+                        res.send(status);
+                    })
+            } else {
+                const newBusinessUser = {
+                    ...newUser,
+                    "businessData": {
+                        ...newUser.businessData,
+                        "restaurant": newUser.businessData.restaurant.id
+                    }
+                }
+                userDao.updateUser(newBusinessUser)
+                    .then(status => {
+                        req.session['profile'] = newUser;
+                        res.send(status);
+                    })
+            }
+        };
 
     // TODO: Add notifications, activities, reviews, bookmarks into profile later
     const login = (req, res) => {
@@ -47,7 +62,8 @@ module.exports = (app) => {
                         .then(activities => {
                             if (activities) {
                                 req.session['userActivities'] = activities.length > 10
-                                                                ? activities.slice(0, 10) : activities;
+                                                                ? activities.slice(0, 10)
+                                                                : activities;
                             } else {
                                 req.session['userActivities'] = [];
                             }
@@ -113,7 +129,6 @@ module.exports = (app) => {
             })
     }
 
-
     const profile = (req, res) => {
         let profile = req.session['profile'];
 
@@ -164,10 +179,8 @@ module.exports = (app) => {
             })
     }
 
-
     const logout = (req, res) =>
         res.send(req.session.destroy());
-
 
     const follow = (req, res) => {
         const followeeId = req.body['followeeId'];
@@ -181,7 +194,6 @@ module.exports = (app) => {
                     })
             })
     }
-
 
     const unfollow = (req, res) => {
         const followeeId = req.body['followeeId'];
@@ -197,7 +209,6 @@ module.exports = (app) => {
                     })
             })
     }
-
 
     const findUserByIdAsync = async (usersId) => {
         let usersInfo = [];
@@ -233,7 +244,6 @@ module.exports = (app) => {
                 res.json(followersInfo);
             })
     }
-
 
     app.post('/api/login', login);
     app.post('/api/register', register);
