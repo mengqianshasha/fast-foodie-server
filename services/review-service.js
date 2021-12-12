@@ -9,8 +9,10 @@ module.exports = (app) => {
 
   const postNewReview = (req, res) => {
     const newReview = req.body;
-    return reviewDao.createReview(newReview).then(insertedReview => res.send(insertedReview))
-
+    return reviewDao.createReview(newReview).then(insertedReview => {
+      userDao..then
+      accit
+      res.send(insertedReview)})
   }
 
   const deleteReview = (req, res) => {
