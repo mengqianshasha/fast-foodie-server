@@ -13,7 +13,7 @@ const axios = require('axios');
 app.use(function (req, res, next) {
     // res.header("Access-Control-Allow-Origin", CONSTANTS.CLIENT_URL);
     res.header("Access-Control-Allow-Origin", req.header('Origin'));
-    res.header("Access-Control-Allow-Headers",
+    res.header("Access-Conqrol-Allow-Headers",
                "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods",
                "GET, POST, PUT, DELETE, OPTIONS");
