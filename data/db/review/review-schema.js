@@ -18,7 +18,7 @@ const reviewSchema = mongoose.Schema({
                                              location: String,
                                              reviewNum: Number,
                                              friendNum: Number,
-                                             follwersNum: Number
+                                             followerNum: Number
                                          },
                                          restaurantInfo: {
                                              name: String,

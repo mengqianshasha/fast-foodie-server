@@ -26,8 +26,8 @@ const findByRestaurantIdFromNewest = (restaurantId) =>
 const findReviewsByLocationExcludeUser= (location, user) => {
     return reviewModel.find({location: location}).nor([{user: user}]).sort({"_id": -1});
 }
-const createReview = (review) =>
-    reviewModel.create(review);
+const createReview = (review) => reviewModel.create(review);
+
 
 const updateReview = (id, review) =>
     reviewModel.updateOne({_id: id}, {
