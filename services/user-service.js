@@ -217,7 +217,11 @@ module.exports = (app) => {
             })
     }
 
+    const updateProfileReviews = (req, res) => {
+        userDao.updateUser(req.body).then(status => res.send(status))
+    }
 
+    app.put('/api/updateProfileReviews', updateProfileReviews);
     app.post('/api/login', login);
     app.post('/api/register', register);
     app.post('/api/profile', profile);
