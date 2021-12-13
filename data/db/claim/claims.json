@@ -1,0 +1,34 @@
+[{
+  "_id" : "61b69eb849a3aea3bcde98d8",
+  "user" : "61b6964649a3aea3bcde98d3",
+  "restaurant" : "Rv4NgRl-wkMNPNdqXNSGBg",
+  "time_created" : "2021-12-12 5:15:36",
+  "file_url" : "http://www.africau.edu/images/default/sample.pdf",
+  "status" : "approved",
+  "restaurantName" : "Shake Shack",
+  "userName" : "b1 b1",
+  "__v" : 0
+ },
+  {
+    "_id" : "61b69eb849a3aea3bcde98d8",
+    "user" : "61b6964649a3aea3bcde98d3",
+    "restaurant" : "Rv4NgRl-wkMNPNdqXNSGBg",
+    "time_created" : "2021-12-12 5:15:36",
+    "file_url" : "http://www.africau.edu/images/default/sample.pdf",
+    "status" : "denied",
+    "restaurantName" : "Shake Shack",
+    "userName" : "b1 b1",
+    "__v" : 0
+  },
+  {
+    "_id" : "61b69eb849a3aea3bcde98d8",
+    "user" : "61b6964649a3aea3bcde98d3",
+    "restaurant" : "Rv4NgRl-wkMNPNdqXNSGBg",
+    "time_created" : "2021-12-12 5:15:36",
+    "file_url" : "http://www.africau.edu/images/default/sample.pdf",
+    "status" : "unprocessed",
+    "restaurantName" : "Shake Shack",
+    "userName" : "b1 b1",
+    "__v" : 0
+  }
+]

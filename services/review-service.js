@@ -3,6 +3,8 @@ const userDao = require('../data/db/user/user-dao');
 const activityDao = require('../data/db/activity/activity-dao');
 const notificationDao = require('../data/db/notification/notification-dao')
 const moment = require('moment')
+const {findUsersByRestaurant} = require("../data/db/user/user-dao");
+const {createNotification} = require("../data/db/notification/notification-dao");
 
 module.exports = (app) => {
   const axios = require('axios');
@@ -41,13 +43,22 @@ module.exports = (app) => {
         review: insertedReview._id.toString()
       }
       activityDao.createActivity(activity);
-      const notification = {
-        user: insertedReview.user,
-        type: "new-review",
-        time_created: insertedReview.time_created,
-        review: insertedReview._id.toString()
-      };
-      notificationDao.createNotification(notification);
+
+      findUsersByRestaurant(newReview.restaurant)
+          .then(businessOwners => {
+            if (businessOwners && businessOwners.length !== 0) {
+              businessOwners.map(businessOwner => {
+                const notification = {
+                  user: businessOwner._id,
+                  type: "new-review",
+                  time_created: insertedReview.time_created,
+                  review: insertedReview._id.toString()
+                };
+                createNotification(notification);
+              })
+            }
+          })
+
       res.send(insertedReview)
     })
   }

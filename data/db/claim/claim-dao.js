@@ -12,6 +12,9 @@ const findAllClaims = () =>
 const findClaimById = (claimId) =>
     claimModel.findById(claimId)
 
+const findClaimByRestaurantAndStatus = (restaurantId, status) =>
+    claimModel.find({$and: [{restaurant: restaurantId}, {status}]})
+
 
 const approveClaimById = (claimId) =>
     claimModel.updateOne({"_id": claimId}, {$set: {"status": "approved"}})
@@ -19,8 +22,9 @@ const approveClaimById = (claimId) =>
 const denyClaimById = (claimId) =>
     claimModel.updateOne({"_id": claimId}, {$set: {"status": "denied"}})
 
+
 module.exports = {
     createClaim,
-    findClaimByUser, findAllClaims, findClaimById,
+    findClaimByUser, findAllClaims, findClaimById, findClaimByRestaurantAndStatus,
     approveClaimById, denyClaimById
 }
