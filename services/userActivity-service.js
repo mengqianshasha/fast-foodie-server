@@ -23,11 +23,13 @@ module.exports = (app) => {
             let actualNewActivities = newFetchedActivities.filter(newAct =>
                                                                         !currentActivitiesId.includes(
                                                                             newAct['_doc']['_id'].toString()));
-           /* console.log("Filtered new acts: ");
+            /*console.log("Filtered new acts: ");
             console.log(actualNewActivities);*/
+
             actualNewActivities = actualNewActivities.map(act => act['_doc']);
             let updatedActivities = [...actualNewActivities, ...activities];
             updatedRecentActs = updatedActivities.length > 10 ? updatedActivities.slice(0, 10) : updatedActivities;
+
             /*console.log("Actual new acts to find details: ");
             console.log(updatedRecentActs);*/
         }
@@ -109,6 +111,9 @@ module.exports = (app) => {
                     continue;
                 }
 
+                console.log("Find reply-review detail");
+                console.log(activity);
+
                 let reviewDetail = {};
                 try {
                     const findReviewDetail = await reviewDao.findReviewById(activity['replyReview'])
@@ -151,6 +156,7 @@ module.exports = (app) => {
         let user = req.session['profile']
         let activities = req.session['userActivities'];
 
+
         if (!user || !activities) {
             res.json([]);
         }
@@ -161,19 +167,16 @@ module.exports = (app) => {
 
                 // if newFetched activities are empty, do nothing and return the session
                 if (newFetchedActivities.length === 0) {
-
                     console.log("return early because nothing new fetched");
-
                     res.json(activities);
                     return;
                 }
 
                 // if newFetched is the same as the one in session, and the session has detail information
                 // Do nothing and return the session
-                if (activities.length !== 0 && activities[0]
+                if (activities !== undefined && activities.length !== 0 && activities[0]
                     && activities[0]['_id'].toString() === newFetchedActivities[0]['_id'].toString()
                     && (activities[0]['reviewDetail'] || activities[0]['followDetail'])) {
-
                     console.log("return early because nothing changed");
                     res.json(activities);
                     return;
@@ -185,6 +188,7 @@ module.exports = (app) => {
                 findActivityDetail(activities, newFetchedRecentActs)
                     .then(newActsDetail => {
                         //console.log(newActsDetail);
+
                         // Update the session with the new activitiesDetail
                         req.session['userActivities'] = newActsDetail;
                         res.json(newActsDetail);

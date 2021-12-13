@@ -36,7 +36,8 @@ module.exports = (app) => {
             updateProfileReviews(insertedReview).then(user => {
                 req.session['profile'] = user;
                 req.session.save();
-                //userDao.updateUser(user).then(status => console.log("user updated"))
+                userDao.updateUser(user)
+                    .then(status => console.log("user updated"))
             });
             const activity = {
                 user: insertedReview.user,
@@ -45,7 +46,8 @@ module.exports = (app) => {
                 review: insertedReview._id.toString()
             }
 
-            //activityDao.createActivityAsync(activity).then(r => console.log("activity created!"));
+            activityDao.createActivityAsync(activity)
+                .then(r => console.log("activity created!"));
 
             findUsersByRestaurant(newReview.restaurant)
                 .then(businessOwners => {
@@ -114,15 +116,19 @@ module.exports = (app) => {
 
                                       /********Update Activities and Notifications Session*********/
                                       let activitySession = req.session['userActivities'];
-                                      const newActivitySession =
-                                          deleteActivitySessionReview(reviewId, activitySession);
+                                      let newActivitySession;
+                                      deleteActivitySessionReview(reviewId, activitySession)
+                                              .then(res => newActivitySession = res);
                                       req.session['userActivities'] = newActivitySession;
                                       req.session.save();
 
                                       let notificationSession = req.session['userNotifications'];
-                                      const newNotificationSession =
-                                          deleteNotificationSessionReview(reviewId,
-                                                                          notificationSession);
+                                      let newNotificationSession;
+                                      deleteNotificationSessionReview(reviewId,
+                                                                      notificationSession)
+                                           .then(res => newNotificationSession = res);
+                                      console.log("After deleting review, this is the new notification session");
+                                      console.log(newNotificationSession);
                                       req.session['userNotifications'] = newNotificationSession;
                                       req.session.save();
                                   })
@@ -133,19 +139,31 @@ module.exports = (app) => {
     }
 
     const saveReview = (req, res) => {
-        reviewDao.updateReview(req.params.reviewId, req.body).then(status => res.send(status))
+        reviewDao.updateReview(req.params.reviewId, req.body)
+            .then(status => res.send(status))
     }
 
     const updateReply = (req, res) => {
         const newReview = req.body;
-        reviewDao.updateReview(req.params.reviewId, req.body).then(status => res.send(status));
-        const activity = {
-            user: newReview.replies[0].user,
-            type: "reply-review",
-            time_created: newReview.time_created,
-            review: newReview._id.toString()
-        }
-        activityDao.createActivity(activity);
+        const currentReview = reviewDao.findReviewByIdAsync(req.params.reviewId);
+        reviewDao.updateReview(req.params.reviewId, req.body)
+            .then(status => {
+                console.log("DB update reply review!")
+                res.send(status);
+            });
+
+        /*if (currentReview.replies.length !== 0 || currentReview.replies[0]['user'] !== "") {*/
+            const activity = {
+                user: newReview.replies[0].user,
+                type: "reply-review",
+                time_created: newReview.time_created,
+                replyReview: newReview._id.toString()
+            }
+            activityDao.createActivityAsync(activity)
+                .then(r => console.log("Reply activity created!"));
+        /*}*/
+
+
     }
 
     const findAllReviewsByIdsAsync = async (reviewsId, userId) => {

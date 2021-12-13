@@ -14,8 +14,7 @@ module.exports = (app) => {
             (!notifications[0]['reviewDetail'] &&
              !notifications[0]['followerDetail'] &&
             !notifications[0]['claimDetail'])
-        )
-        {
+        ) {
             updatedRecentNotis = newFetchedRecentNotis.map(noti => noti['_doc']);
         }
         // Combine new fetched activities with previous activities
@@ -165,8 +164,6 @@ module.exports = (app) => {
 
         userNotificationDao.findNotificationByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedNotis => {
-                /*console.log(newFetchedNotis);*/
-
                 // if newFetched notifications are empty, do nothing and return the session
                 if (newFetchedNotis.length === 0) {
                     res.json(notifications);
@@ -189,7 +186,7 @@ module.exports = (app) => {
 
                 findNotificationDetail(notifications, newFetchedRecentNotis)
                     .then(newNotisDetail => {
-                        /*console.log(newNotisDetail);*/
+                        //console.log(newNotisDetail);
 
                         req.session['userNotifications'] = newNotisDetail;
                         res.json(newNotisDetail);
