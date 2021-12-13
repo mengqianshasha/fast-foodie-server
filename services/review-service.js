@@ -80,8 +80,9 @@ module.exports = (app) => {
     reviewDao.deleteReview(reviewId).then(status => res.send(status));
     reviewDao.findReviewById(reviewId).then(review => deleteProfileReview(review)
         .then(user => {
+          console.log()
           req.session['profile'] = user;
-          userDao.updateUser(user)
+          userDao.updateUser(user).then(status=> console.log("user updated"))
         }))
   }
 
