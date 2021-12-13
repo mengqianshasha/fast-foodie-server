@@ -146,9 +146,9 @@ module.exports = (app) => {
         let user = req.session['profile']
         let activities = req.session['userActivities'];
 
-        if (!user || !activities) {
+/*        if (!user || !activities) {
             res.json([]);
-        }
+        }*/
 
         userActivityDao.findActivityByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedActivities => {
