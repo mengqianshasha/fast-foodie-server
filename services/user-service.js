@@ -194,14 +194,14 @@ module.exports = (app) => {
                         createNotification({
                             user: followeeId,
                             type: 'new-follower',
-                            time_created: moment().format('YYYY-MM-DD h:mm:ss'),
+                            time_created: moment().format('YYYY-MM-DD HH:mm:ss'),
                             follower: userId
                         })
                             .then(noti => {
                                 createActivity({
                                     user: userId,
                                     type: 'follow',
-                                    time_created: moment().format('YYYY-MM-DD h:mm:ss'),
+                                    time_created: moment().format('YYYY-MM-DD HH:mm:ss'),
                                     follow: followeeId
                                 })
                                     .then(acti => {
