@@ -64,10 +64,11 @@ module.exports = (app) => {
                 try {
                     const findReviewDetail = await reviewDao.findReviewById(notification['review'])
                         .exec();
-                    /*console.log("Found review detail");
-                    console.log(findReviewDetail);*/
-
                     // exec() return a bunch of things, the returned data is inside '_doc' property
+                    if (!findReviewDetail) {
+                        await userNotificationDao.deleteNotification(notification._id).exec();
+                        continue;
+                    }
                     reviewDetail = findReviewDetail['_doc']
                 } catch (e) {
                     console.log(e)

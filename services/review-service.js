@@ -64,7 +64,8 @@ module.exports = (app) => {
   }
 
   const deleteProfileReview = async (review) => {
-    let user = {}
+    let user = {};
+    console.log(review);
     const findUser = userDao.findUserById(review['user'])
     .then(res => {
       user = res;

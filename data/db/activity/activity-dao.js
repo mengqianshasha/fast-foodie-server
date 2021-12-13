@@ -16,7 +16,7 @@ const createActivity = (activity) =>
     model.create(activity);
 
 const deleteActivity = (activityId) =>
-    model.deleteOne({_id: reviewId});
+    model.deleteOne({_id: activityId});
 
 module.exports = {
     findAllActivitiesFromNewest, findActivityById,

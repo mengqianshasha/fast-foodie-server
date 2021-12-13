@@ -46,6 +46,10 @@ module.exports = (app) => {
                     const findReviewDetail = await reviewDao.findReviewById(activity['review'])
                         .exec();
                     // exec() return a bunch of things, the object is inside '_doc' property
+                    if (!findReviewDetail) {
+                        await userActivityDao.deleteActivity(activity._id).exec();
+                        continue;
+                    }
                     reviewDetail = findReviewDetail['_doc'];
                 } catch (e) {
                     console.log(e)
@@ -104,6 +108,10 @@ module.exports = (app) => {
                 try {
                     const findReviewDetail = await reviewDao.findReviewById(activity['replyReview'])
                         .exec();
+                    if (!findReviewDetail) {
+                        userActivityDao.deleteActivity(activity._id);
+                        continue;
+                    }
                     // exec() return a bunch of things, the object is inside '_doc' property
                     reviewDetail = findReviewDetail['_doc']
                 } catch (e) {
