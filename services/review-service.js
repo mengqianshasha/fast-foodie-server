@@ -49,7 +49,7 @@ module.exports = (app) => {
             if (businessOwners && businessOwners.length !== 0) {
               businessOwners.map(businessOwner => {
                 const notification = {
-                  user: businessOwner._id,
+                  user: businessOwner._id.toString(),
                   type: "new-review",
                   time_created: insertedReview.time_created,
                   review: insertedReview._id.toString()
@@ -80,8 +80,9 @@ module.exports = (app) => {
     reviewDao.deleteReview(reviewId).then(status => res.send(status));
     reviewDao.findReviewById(reviewId).then(review => deleteProfileReview(review)
         .then(user => {
+          console.log()
           req.session['profile'] = user;
-          userDao.updateUser(user)
+          userDao.updateUser(user).then(status=> console.log("user updated"))
         }))
   }
 
