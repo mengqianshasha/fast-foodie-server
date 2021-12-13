@@ -152,6 +152,9 @@ module.exports = (app) => {
     const userNotifications = (req, res) => {
         let user = req.session['profile']
         let notifications = req.session['userNotifications'];
+        if (!user || !notifications) {
+            res.json([]);
+        }
 
         userNotificationDao.findNotificationByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedNotis => {

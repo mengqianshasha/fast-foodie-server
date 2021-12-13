@@ -103,13 +103,17 @@ module.exports = (app) => {
   }
 
 
-    const findAllReviewsByIdsAsync = async (reviewsId) => {
+    const findAllReviewsByIdsAsync = async (reviewsId, userId) => {
         let reviewsInfo = [];
         for (let i = 0; i < reviewsId.length; i++) {
             const reviewId = reviewsId[i];
             let reviewInfo = {};
             try {
                 const findReviewInfo = await reviewDao.findReviewById(reviewId).exec();
+                if (!findReviewInfo) {
+                    await userDao.deleteReviewOfUser(userId, reviewId);
+                    continue;
+                }
                 reviewInfo = findReviewInfo['_doc'];
             } catch (e) {
                 console.log(e)
@@ -137,9 +141,10 @@ module.exports = (app) => {
 
     const findAllReviewsByProfile = (req, res) => {
         if (req.session['profile']) {
+            const userId = req.session['profile']._id;
             const reviewsId = req.session['profile']['customerData']['reviews'];
             /*console.log(reviewsId);*/
-            findAllReviewsByIdsAsync(reviewsId)
+            findAllReviewsByIdsAsync(reviewsId, userId)
                 .then(reviewsInfo => {
                     /*console.log(reviewsInfo);*/
                     res.json(reviewsInfo);
@@ -154,7 +159,7 @@ module.exports = (app) => {
         const userId = req.params.userId;
         userDao.findUserById(userId)
             .then(user => {
-                findAllReviewsByIdsAsync(user.customerData.reviews)
+                findAllReviewsByIdsAsync(user.customerData.reviews, userId)
                     .then(reviewsInfo => {
                         /*console.log(reviewsInfo);*/
                         res.json(reviewsInfo);

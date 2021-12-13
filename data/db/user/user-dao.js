@@ -84,10 +84,20 @@ const deleteFromFollowers = (userId, userIdToDelete) => {
         })
 }
 
+const deleteReviewOfUser = (userId, reviewId) => {
+    return userModel.findOne({"_id": userId})
+        .then(user => {
+            user.customerData.reviews = user.customerData.reviews.filter(
+                review => review !== reviewId);
+            return user.save();
+        })
+
+}
+
 module.exports = {
     findByUsername, findAllUsers, findUserById,
     findByUsernameAndPassword, findByRole, findUsersByRestaurant,
     createUser, updateUser, deleteUser,
     addToFollowings, deleteFromFollowings, addToFollowers, deleteFromFollowers,
-    updateBusinessData
+    updateBusinessData, deleteReviewOfUser
 };

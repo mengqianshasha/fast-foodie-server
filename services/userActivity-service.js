@@ -146,12 +146,19 @@ module.exports = (app) => {
         let user = req.session['profile']
         let activities = req.session['userActivities'];
 
+        if (!user || !activities) {
+            res.json([]);
+        }
+
         userActivityDao.findActivityByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedActivities => {
-                /*console.log(newFetchedActivities);*/
+                console.log(newFetchedActivities);
 
                 // if newFetched activities are empty, do nothing and return the session
                 if (newFetchedActivities.length === 0) {
+
+                    console.log("return early because nothing new fetched");
+
                     res.json(activities);
                     return;
                 }
@@ -162,6 +169,9 @@ module.exports = (app) => {
                 if (activities.length !== 0
                     && activities[0]['_id'].toString() === newFetchedActivities[0]['_id'].toString()
                     && (activities[0]['reviewDetail'] || activities[0]['followDetail'])) {
+
+                    console.log("return early because nothing changed");
+
                     res.json(activities);
                     return;
                 }
@@ -172,7 +182,6 @@ module.exports = (app) => {
                 findActivityDetail(activities, newFetchedRecentActs)
                     .then(newActsDetail => {
                         /*console.log(newActsDetail);*/
-
                         // Update the session with the new activitiesDetail
                         req.session['userActivities'] = newActsDetail;
                         res.json(newActsDetail);
