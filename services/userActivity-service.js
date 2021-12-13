@@ -7,11 +7,16 @@ module.exports = (app) => {
     const axios = require('axios');
 
     const findActivityDetail = async (activities, newFetchedActivities) => {
+
         let updatedRecentActs;
         // if the session doesn't have detail information
-        if (!activities[0]['reviewDetail'] && !activities[0]['followDetail']) {
+        if (activities.length === 0 || !activities[0] ||
+            (!activities[0]['reviewDetail']
+             && !activities[0]['followDetail'])
+        ) {
             updatedRecentActs = newFetchedActivities.map(act => act['_doc']);
         }
+
         // Combine new fetched activities with previous activities
         else {
             const currentActivitiesId = activities.map(act => act['_id'].toString());
@@ -146,13 +151,13 @@ module.exports = (app) => {
         let user = req.session['profile']
         let activities = req.session['userActivities'];
 
-/*        if (!user || !activities) {
+        if (!user || !activities) {
             res.json([]);
-        }*/
+        }
 
         userActivityDao.findActivityByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedActivities => {
-                // console.log(newFetchedActivities);
+                 //console.log(newFetchedActivities);
 
                 // if newFetched activities are empty, do nothing and return the session
                 if (newFetchedActivities.length === 0) {
@@ -165,13 +170,11 @@ module.exports = (app) => {
 
                 // if newFetched is the same as the one in session, and the session has detail information
                 // Do nothing and return the session
-
-                if (activities.length !== 0
+                if (activities.length !== 0 && activities[0]
                     && activities[0]['_id'].toString() === newFetchedActivities[0]['_id'].toString()
                     && (activities[0]['reviewDetail'] || activities[0]['followDetail'])) {
 
                     console.log("return early because nothing changed");
-
                     res.json(activities);
                     return;
                 }
@@ -181,7 +184,7 @@ module.exports = (app) => {
 
                 findActivityDetail(activities, newFetchedRecentActs)
                     .then(newActsDetail => {
-                        /*console.log(newActsDetail);*/
+                        //console.log(newActsDetail);
                         // Update the session with the new activitiesDetail
                         req.session['userActivities'] = newActsDetail;
                         res.json(newActsDetail);

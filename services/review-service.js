@@ -9,100 +9,144 @@ const {createNotification} = require("../data/db/notification/notification-dao")
 module.exports = (app) => {
     const axios = require('axios');
 
-  const findAllReviews = (req, res) => {
-    const restaurantId = req.params.restaurantId;
-    /*console.log(restaurantId);*/
-    return reviewDao.findByRestaurantIdFromNewest(restaurantId)
-    .then(reviews => {
-      /*console.log(reviews);*/
-      res.json(reviews);
-    });
-  }
+    const findAllReviews = (req, res) => {
+        const restaurantId = req.params.restaurantId;
+        /*console.log(restaurantId);*/
+        return reviewDao.findByRestaurantIdFromNewest(restaurantId)
+            .then(reviews => {
+                /*console.log(reviews);*/
+                res.json(reviews);
+            });
+    }
 
-  const updateProfileReviews = async (review) => {
-    let user = {}
-    const findUser = userDao.findUserById(review['user'])
-    .then(res => {
-      user = res;
-    })
-    await findUser;
-    user.customerData.reviews.push(review._id.toString())
-    return user
-  }
+    const updateProfileReviews = async (review) => {
+        let user = {}
+        const findUser = userDao.findUserById(review['user'])
+            .then(res => {
+                user = res;
+            })
+        await findUser;
+        user.customerData.reviews.push(review._id.toString())
+        return user
+    }
 
-  const postNewReview = (req, res) => {
-    const newReview = req.body;
-    return reviewDao.createReview(newReview).then(insertedReview =>
-    { updateProfileReviews(insertedReview).then(user => {
-      req.session['profile'] = user;
-      req.session.save();
-      userDao.updateUser(user).then(status=> console.log("user updated"))});
-      const activity = {
-        user: insertedReview.user,
-        type: "review",
-        time_created: insertedReview.time_created,
-        review: insertedReview._id.toString()
-      }
-      activityDao.createActivity(activity);
-
-      findUsersByRestaurant(newReview.restaurant)
-          .then(businessOwners => {
-            if (businessOwners && businessOwners.length !== 0) {
-              businessOwners.map(businessOwner => {
-                const notification = {
-                  user: businessOwner._id.toString(),
-                  type: "new-review",
-                  time_created: insertedReview.time_created,
-                  review: insertedReview._id.toString()
-                };
-                createNotification(notification);
-              })
+    const postNewReview = (req, res) => {
+        const newReview = req.body;
+        return reviewDao.createReview(newReview).then(insertedReview => {
+            updateProfileReviews(insertedReview).then(user => {
+                req.session['profile'] = user;
+                req.session.save();
+                //userDao.updateUser(user).then(status => console.log("user updated"))
+            });
+            const activity = {
+                user: insertedReview.user,
+                type: "review",
+                time_created: insertedReview.time_created,
+                review: insertedReview._id.toString()
             }
-          })
 
-      res.send(insertedReview)
-    })
-  }
+            //activityDao.createActivityAsync(activity).then(r => console.log("activity created!"));
 
-  const deleteProfileReview = async (review) => {
-    let user = {};
-    const findUser = userDao.findUserById(review['user'])
-    .then(res => {
-      user = res;
-    })
-    await findUser;
-    user.customerData.reviews = user.customerData.reviews.filter(id => id !== review._id.toString())
-    return user
-  }
+            findUsersByRestaurant(newReview.restaurant)
+                .then(businessOwners => {
+                    if (businessOwners && businessOwners.length !== 0) {
+                        businessOwners.map(businessOwner => {
+                            const notification = {
+                                user: businessOwner._id.toString(),
+                                type: "new-review",
+                                time_created: insertedReview.time_created,
+                                review: insertedReview._id.toString()
+                            };
+                            createNotification(notification);
+                        })
+                    }
+                })
 
-  const deleteReview = (req, res) => {
-    const reviewId = req.params.reviewId;
-    reviewDao.deleteReview(reviewId).then(status => res.send(status));
-    reviewDao.findReviewById(reviewId).then(review => deleteProfileReview(review)
-        .then(user => {
-          req.session['profile'] = user;
-          req.session.save();
-          userDao.updateUser(user).then(status=> console.log("user updated"))
-        }))
-  }
+            res.send(insertedReview)
+        })
+    }
 
+    const deleteProfileReview = async (review) => {
+        /*console.log("This is the deleted review");
+        console.log(review);*/
+
+        let user = {};
+        const findUser = userDao.findUserById(review['user'])
+            .then(res => {
+                user = res;
+
+                /*console.log("This is the user deleting their review");
+                console.log(user);*/
+            })
+        await findUser;
+        user.customerData.reviews =
+            user.customerData.reviews.filter(id => id !== review._id.toString())
+
+        /*console.log("This is the user deleting reviewId from their list");
+        console.log(user);*/
+
+        return user;
+    }
+
+    const deleteActivitySessionReview = async (reviewId, activities) => {
+        return activities.filter(act => (act.review && act.review !== reviewId) ||
+                                        (act.replyReview && act.replyReview !== reviewId) ||
+                                        (!act.review && !act.replyReview));
+    }
+
+    const deleteNotificationSessionReview = async (reviewId, notifications) => {
+        return notifications.filter(notif => (notif.review && notif.review !== reviewId) ||
+                                             !notif.review);
+    }
+
+    const deleteReview = (req, res) => {
+        const reviewId = req.params.reviewId;
+        reviewDao.findReviewById(reviewId)
+            .then(review =>
+                      deleteProfileReview(review)
+                          .then(user => {
+                              /****************Update Profile Session***************/
+                              req.session['profile'] = user;
+                              req.session.save();
+                              userDao.updateUser(user)
+                                  .then(status => {
+                                      console.log("user updated");
+
+                                      /********Update Activities and Notifications Session*********/
+                                      let activitySession = req.session['userActivities'];
+                                      const newActivitySession =
+                                          deleteActivitySessionReview(reviewId, activitySession);
+                                      req.session['userActivities'] = newActivitySession;
+                                      req.session.save();
+
+                                      let notificationSession = req.session['userNotifications'];
+                                      const newNotificationSession =
+                                          deleteNotificationSessionReview(reviewId,
+                                                                          notificationSession);
+                                      req.session['userNotifications'] = newNotificationSession;
+                                      req.session.save();
+                                  })
+                          })
+            )
+        reviewDao.deleteReview(reviewId)
+            .then(status => res.send(status));
+    }
 
     const saveReview = (req, res) => {
         reviewDao.updateReview(req.params.reviewId, req.body).then(status => res.send(status))
     }
 
-  const updateReply = (req, res) => {
-    const newReview = req.body;
-    reviewDao.updateReview(req.params.reviewId, req.body).then(status => res.send(status));
-    const activity = {
-      user: newReview.replies[0].user,
-      type: "reply-review",
-      time_created: newReview.time_created,
-      review: newReview._id.toString()
+    const updateReply = (req, res) => {
+        const newReview = req.body;
+        reviewDao.updateReview(req.params.reviewId, req.body).then(status => res.send(status));
+        const activity = {
+            user: newReview.replies[0].user,
+            type: "reply-review",
+            time_created: newReview.time_created,
+            review: newReview._id.toString()
+        }
+        activityDao.createActivity(activity);
     }
-    activityDao.createActivity(activity);
-  }
-
 
     const findAllReviewsByIdsAsync = async (reviewsId, userId) => {
         let reviewsInfo = [];

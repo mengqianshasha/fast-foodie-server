@@ -12,6 +12,10 @@ const findActivityByUserIdFromNewest = (userId) => {
     return model.find({"user": userId}).sort({_id: -1});
 }
 
+const createActivityAsync = async (activity) => {
+    await model.create(activity);
+}
+
 const createActivity = (activity) =>
     model.create(activity);
 
@@ -21,5 +25,5 @@ const deleteActivity = (activityId) =>
 module.exports = {
     findAllActivitiesFromNewest, findActivityById,
     findActivityByUserIdFromNewest,
-    createActivity, deleteActivity
+    createActivity, deleteActivity, createActivityAsync
 };

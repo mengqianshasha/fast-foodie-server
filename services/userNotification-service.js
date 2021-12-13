@@ -10,13 +10,17 @@ module.exports = (app) => {
     const findNotificationDetail = async (notifications, newFetchedRecentNotis) => {
         let updatedRecentNotis;
         // if the session doesn't have detail information
-        if ((!notifications[0]['reviewDetail'] &&
+        if (notifications.length === 0 || !notifications[0] ||
+            (!notifications[0]['reviewDetail'] &&
              !notifications[0]['followerDetail'] &&
-             !notifications[0]['claimDetail'])) {
+            !notifications[0]['claimDetail'])
+        )
+        {
             updatedRecentNotis = newFetchedRecentNotis.map(noti => noti['_doc']);
         }
         // Combine new fetched activities with previous activities
-        else {
+    else
+        {
             const currentNotisId = notifications.map(noti => noti['_id'].toString());
             let actualNewNotis = newFetchedRecentNotis.filter(newNoti =>
                                                                   !currentNotisId.includes(
@@ -101,7 +105,8 @@ module.exports = (app) => {
 
                 let claimDetail = {};
                 try {
-                    const findClaimDetail = await claimDao.findClaimById(notification['claim']).exec();
+                    const findClaimDetail = await claimDao.findClaimById(notification['claim'])
+                        .exec();
                     claimDetail = findClaimDetail['_doc'];
                 } catch (e) {
                     console.log(e);
@@ -152,9 +157,11 @@ module.exports = (app) => {
     const userNotifications = (req, res) => {
         let user = req.session['profile']
         let notifications = req.session['userNotifications'];
-/*        if (!user || !notifications) {
+
+        if (user === undefined || notifications === undefined ||user['_id'] === undefined) {
             res.json([]);
-        }*/
+            return;
+        }
 
         userNotificationDao.findNotificationByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedNotis => {
@@ -166,9 +173,9 @@ module.exports = (app) => {
                     return;
                 }
 
-                // if newFetched is the same as the one in session, and the session has detail information
-                // Do nothing and return the session
-                if (notifications.length !== 0
+                // if newFetched is the same as the one in session, and the session has detail
+                // information Do nothing and return the session
+                if (notifications.length !== 0 && notifications[0]
                     && notifications[0]['_id'].toString() === newFetchedNotis[0]['_id'].toString()
                     && (notifications[0]['reviewDetail'] ||
                         notifications[0]['followerDetail'] ||
@@ -190,8 +197,6 @@ module.exports = (app) => {
             })
     }
 
-
-
     const createNotification = (req, res) => {
         const newNotification = {
             ...req.body,
@@ -200,7 +205,6 @@ module.exports = (app) => {
         userNotificationDao.createNotification(newNotification)
             .then(insertedNotification => res.send(insertedNotification))
     }
-
 
     app.post('/api/notifications', userNotifications);
     app.post('/api/newNotification', createNotification);
