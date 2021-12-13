@@ -140,7 +140,23 @@ module.exports = (app) => {
 
     const saveReview = (req, res) => {
         reviewDao.updateReview(req.params.reviewId, req.body)
-            .then(status => res.send(status))
+            .then(status => {
+
+                /***********Update Activity session***********/
+                let currentActSession = req.session['userActivities'];
+                const currentReviewAct = currentActSession.find(act => act.review === req.params.reviewId);
+                const idx = currentActSession.findIndex(act => act.review === req.params.reviewId);
+                const newReviewAct = {
+                    ...currentReviewAct,
+                    "reviewDetail": {
+                        ...currentReviewAct.reviewDetail,
+                        "text": req.body.text
+                    }
+                };
+                req.session['userActivities'][idx] = newReviewAct;
+
+                res.send(status);
+            })
     }
 
     const updateReply = (req, res) => {

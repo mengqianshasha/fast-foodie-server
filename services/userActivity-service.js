@@ -111,9 +111,6 @@ module.exports = (app) => {
                     continue;
                 }
 
-                console.log("Find reply-review detail");
-                console.log(activity);
-
                 let reviewDetail = {};
                 try {
                     const findReviewDetail = await reviewDao.findReviewById(activity['replyReview'])
@@ -167,7 +164,7 @@ module.exports = (app) => {
 
                 // if newFetched activities are empty, do nothing and return the session
                 if (newFetchedActivities.length === 0) {
-                    console.log("return early because nothing new fetched");
+                    //console.log("return early because nothing new fetched");
                     res.json(activities);
                     return;
                 }
@@ -177,7 +174,8 @@ module.exports = (app) => {
                 if (activities !== undefined && activities.length !== 0 && activities[0]
                     && activities[0]['_id'].toString() === newFetchedActivities[0]['_id'].toString()
                     && (activities[0]['reviewDetail'] || activities[0]['followDetail'])) {
-                    console.log("return early because nothing changed");
+
+                    //console.log("return early because nothing changed");
                     res.json(activities);
                     return;
                 }
