@@ -14,7 +14,6 @@ module.exports = (app) => {
                     claim: response._id
                 })
                     .then(noti => {
-                        console.log(noti);
                         res.sendStatus("200");
                     })
             })

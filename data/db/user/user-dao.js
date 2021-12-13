@@ -17,6 +17,10 @@ const findByUsername = ({username}) =>
 const findByRole = (role) =>
     userModel.findOne({"role": role});
 
+const findUsersByRestaurant = (restaurant) => {
+    return userModel.find({"businessData.restaurant": restaurant})
+}
+
 const createUser = (user) =>
     userModel.create(user);
 
@@ -82,7 +86,7 @@ const deleteFromFollowers = (userId, userIdToDelete) => {
 
 module.exports = {
     findByUsername, findAllUsers, findUserById,
-    findByUsernameAndPassword, findByRole,
+    findByUsernameAndPassword, findByRole, findUsersByRestaurant,
     createUser, updateUser, deleteUser,
     addToFollowings, deleteFromFollowings, addToFollowers, deleteFromFollowers,
     updateBusinessData
