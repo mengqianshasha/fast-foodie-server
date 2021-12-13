@@ -1,5 +1,5 @@
 const {createClaim, findClaimByUser, findAllClaims, findClaimById, approveClaimById, denyClaimById} = require("../data/db/claim/claim-dao");
-const {updateBusinessData} = require("../data/db/user/user-dao");
+const {updateBusinessData, findUsersByRestaurant} = require("../data/db/user/user-dao");
 const {createNotification} = require("../data/db/notification/notification-dao");
 module.exports = (app) => {
 
@@ -89,10 +89,21 @@ module.exports = (app) => {
             })
     }
 
+    const checkRestaurantClaimStatus = (req, res) => {
+        findUsersByRestaurant(req.params['restaurantId'])
+            .then(users => {
+                if (users && users.length !== 0) {
+                    res.send('yes');
+                } else {
+                    res.send('no');
+                }
+            })
+    }
     app.post('/api/claim', claimBusiness);
     app.get('/api/get_claim/:claimId', getClaimById);
     app.get('/api/get_claim', getClaim);
     app.get('/api/get_claims', getAllClaims);
     app.put('/api/approve_claim', approveClaim);
-    app.put('/api/deny_claim', denyClaim)
+    app.put('/api/deny_claim', denyClaim);
+    app.get('/api/restaurant_claim_status/:restaurantId', checkRestaurantClaimStatus)
 }
