@@ -164,7 +164,8 @@ module.exports = (app) => {
 
                 // if newFetched is the same as the one in session, and the session has detail information
                 // Do nothing and return the session
-                if (notifications[0]['_id'].toString() === newFetchedNotis[0]['_id'].toString()
+                if (notifications.length !== 0
+                    && notifications[0]['_id'].toString() === newFetchedNotis[0]['_id'].toString()
                     && (notifications[0]['reviewDetail'] ||
                         notifications[0]['followerDetail'] ||
                         notifications[0]['claimDetail'])) {

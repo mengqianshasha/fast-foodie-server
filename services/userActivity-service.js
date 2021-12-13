@@ -150,8 +150,9 @@ module.exports = (app) => {
 
                 // if newFetched is the same as the one in session, and the session has detail information
                 // Do nothing and return the session
-                if (activities[0]['_id'].toString() === newFetchedActivities[0]['_id'].toString()
-                && (activities[0]['reviewDetail'] || activities[0]['followDetail'])) {
+                if (activities.length !== 0
+                    && activities[0]['_id'].toString() === newFetchedActivities[0]['_id'].toString()
+                    && (activities[0]['reviewDetail'] || activities[0]['followDetail'])) {
                     res.json(activities);
                     return;
                 }
