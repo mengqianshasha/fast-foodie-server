@@ -49,7 +49,7 @@ module.exports = (app) => {
             if (businessOwners && businessOwners.length !== 0) {
               businessOwners.map(businessOwner => {
                 const notification = {
-                  user: businessOwner._id,
+                  user: businessOwner._id.toString(),
                   type: "new-review",
                   time_created: insertedReview.time_created,
                   review: insertedReview._id.toString()
