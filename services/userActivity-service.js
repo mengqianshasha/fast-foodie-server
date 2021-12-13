@@ -152,7 +152,7 @@ module.exports = (app) => {
 
         userActivityDao.findActivityByUserIdFromNewest(user['_id'].toString())
             .then(newFetchedActivities => {
-                console.log(newFetchedActivities);
+                // console.log(newFetchedActivities);
 
                 // if newFetched activities are empty, do nothing and return the session
                 if (newFetchedActivities.length === 0) {

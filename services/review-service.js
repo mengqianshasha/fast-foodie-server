@@ -35,6 +35,7 @@ module.exports = (app) => {
     return reviewDao.createReview(newReview).then(insertedReview =>
     { updateProfileReviews(insertedReview).then(user => {
       req.session['profile'] = user;
+      req.session.save();
       userDao.updateUser(user).then(status=> console.log("user updated"))});
       const activity = {
         user: insertedReview.user,
@@ -65,7 +66,6 @@ module.exports = (app) => {
 
   const deleteProfileReview = async (review) => {
     let user = {};
-    console.log(review);
     const findUser = userDao.findUserById(review['user'])
     .then(res => {
       user = res;
@@ -80,8 +80,8 @@ module.exports = (app) => {
     reviewDao.deleteReview(reviewId).then(status => res.send(status));
     reviewDao.findReviewById(reviewId).then(review => deleteProfileReview(review)
         .then(user => {
-          console.log()
           req.session['profile'] = user;
+          req.session.save();
           userDao.updateUser(user).then(status=> console.log("user updated"))
         }))
   }
