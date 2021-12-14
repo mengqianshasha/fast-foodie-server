@@ -164,8 +164,9 @@ module.exports = (app) => {
         if (req.session['profile']) {
             const userId = req.session['profile']._id;
             const reviewsId = req.session['profile']['customerData']['reviews'];
-            /*console.log(reviewsId);*/
-            findAllReviewsByIdsAsync(reviewsId.reverse(), userId)
+            const orderedReviewsId = reviewsId.sort().reverse();
+            //console.log(orderedReviewsId);
+            findAllReviewsByIdsAsync(orderedReviewsId, userId)
                 .then(reviewsInfo => {
                     /*console.log(reviewsInfo);*/
                     res.json(reviewsInfo);
@@ -180,7 +181,8 @@ module.exports = (app) => {
         const userId = req.params.userId;
         userDao.findUserById(userId)
             .then(user => {
-                findAllReviewsByIdsAsync(user.customerData.reviews.reverse(), userId)
+                const orderedReviewsId = user.customerData.reviews.sort().reverse();
+                findAllReviewsByIdsAsync(orderedReviewsId, userId)
                     .then(reviewsInfo => {
                         /*console.log(reviewsInfo);*/
                         res.json(reviewsInfo);
