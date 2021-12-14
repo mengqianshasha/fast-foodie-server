@@ -1,20 +1,47 @@
-const {createClaim, findClaimByUser, findAllClaims, findClaimById, approveClaimById, denyClaimById} = require("../data/db/claim/claim-dao");
+const {
+    createClaim,
+    findClaimByUser,
+    findAllClaims,
+    findClaimById,
+    approveClaimById,
+    denyClaimById
+} = require("../data/db/claim/claim-dao");
 const {updateBusinessData, findUsersByRestaurant} = require("../data/db/user/user-dao");
 const {createNotification} = require("../data/db/notification/notification-dao");
+const {getYelpDetail} = require("../data/api/yelp-api");
 module.exports = (app) => {
 
     const claimBusiness = (req, res) => {
         const claim = req.body;
-        createClaim(claim)
-            .then(response => {
-                createNotification({
-                    user: "61b27099141351ab03bf256a",
-                    type: "new-claim",
-                    time_created: claim.time_created,
-                    claim: response._id
-                })
-                    .then(noti => {
-                        res.sendStatus("200");
+
+        // get restaurant
+        getYelpDetail(claim.restaurant)
+            .then(restaurantData => {
+                const restaurant = restaurantData.data;
+
+                // create claim
+                const newClaim = {
+                    ...claim,
+                    restaurantInfo: {
+                        name: restaurant.name,
+                        image_url: restaurant.image_url,
+                        price: restaurant.price,
+                        categories: restaurant.categories.map(category => category.title)
+                            .reduce((prev, curr) => [prev, ', ', curr]).join(''),
+                        location: restaurant.location['display_address'].map(addr => addr).join(', ')
+                    }
+                }
+                createClaim(newClaim)
+                    .then(response => {
+                        createNotification({
+                            user: "61b27099141351ab03bf256a",
+                            type: "new-claim",
+                            time_created: claim.time_created,
+                            claim: response._id
+                        })
+                            .then(noti => {
+                                res.sendStatus("200");
+                            })
                     })
             })
     }
