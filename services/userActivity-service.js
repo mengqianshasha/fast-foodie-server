@@ -110,9 +110,11 @@ module.exports = (app) => {
     }
 
     const userActivities = (req, res) => {
-        let user = req.session['profile']
+        let user = req.session['profile'];
+
         if (!user) {
             res.json([]);
+            return;
         }
 
         userActivityDao.findActivityByUserIdFromNewest(user['_id'].toString())
