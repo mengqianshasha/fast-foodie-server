@@ -29,65 +29,37 @@ module.exports = (app) => {
             .then(status => req.send(status));
 
     const updateUser = (req, res) => {
-            const newUser = req.body;
-            if (newUser.role !== "business") {
-                userDao.updateUser(newUser)
-                    .then(status => {
-                        req.session['profile'] = req.body;
-                        res.send(status);
-                    })
-            } else {
-                const newBusinessUser = {
-                    ...newUser,
-                    "businessData": {
-                        ...newUser.businessData,
-                        "restaurant": newUser.businessData.restaurant.id
-                    }
+        const newUser = req.body;
+        if (newUser.role !== "business") {
+            userDao.updateUser(newUser)
+                .then(status => {
+                    req.session['profile'] = req.body;
+                    res.send(status);
+                })
+        } else {
+            const newBusinessUser = {
+                ...newUser,
+                "businessData": {
+                    ...newUser.businessData,
+                    "restaurant": newUser.businessData.restaurant.id
                 }
-                userDao.updateUser(newBusinessUser)
-                    .then(status => {
-                        req.session['profile'] = newUser;
-                        res.send(status);
-                    })
             }
-        };
+            userDao.updateUser(newBusinessUser)
+                .then(status => {
+                    req.session['profile'] = newUser;
+                    res.send(status);
+                })
+        }
+    };
 
-    // TODO: Add notifications, activities, reviews, bookmarks into profile later
+
+
     const login = (req, res) => {
         userDao.findByUsernameAndPassword(req.body)
             .then(user => {
                 if (user) {
                     req.session['profile'] = user;
-
-                    // Attach user-activities list to session
-                    userActivityDao.findActivityByUserIdFromNewest((user['_id']).toString())
-                        .then(activities => {
-                            if (activities) {
-                                req.session['userActivities'] = activities.length > 10
-                                                                ? activities.slice(0, 10)
-                                                                : activities;
-                            } else {
-                                req.session['userActivities'] = [];
-                            }
-                        })
-
-                        // Attach user-notifications list to session
-                        .then(status => {
-                            userNotificationDao.findNotificationByUserIdFromNewest(
-                                user['_id'].toString())
-                                .then(
-                                    notifications => {
-                                        if (notifications) {
-                                            req.session['userNotifications'] =
-                                                notifications.length > 10
-                                                ? notifications.slice(0, 10) : notifications;
-                                        } else {
-                                            req.session['userNotifications'] = [];
-                                        }
-                                        res.json(user);
-                                    }
-                                )
-                        })
+                    res.json(user);
                 } else {
                     res.sendStatus(403);
                 }
@@ -192,20 +164,22 @@ module.exports = (app) => {
                 addToFollowers(followeeId, userId)
                     .then(state => {
                         createNotification({
-                            user: followeeId,
-                            type: 'new-follower',
-                            time_created: moment().format('YYYY-MM-DD HH:mm:ss'),
-                            follower: userId
-                        })
+                                               user: followeeId,
+                                               type: 'new-follower',
+                                               time_created: moment().format('YYYY-MM-DD HH:mm:ss'),
+                                               follower: userId
+                                           })
                             .then(noti => {
                                 createActivity({
-                                    user: userId,
-                                    type: 'follow',
-                                    time_created: moment().format('YYYY-MM-DD HH:mm:ss'),
-                                    follow: followeeId
-                                })
+                                                   user: userId,
+                                                   type: 'follow',
+                                                   time_created: moment()
+                                                       .format('YYYY-MM-DD HH:mm:ss'),
+                                                   follow: followeeId
+                                               })
                                     .then(acti => {
-                                        req.session['profile']['customerData']['followings'].push(followeeId);
+                                        req.session['profile']['customerData']['followings'].push(
+                                            followeeId);
                                         res.sendStatus(200);
                                     })
                             })

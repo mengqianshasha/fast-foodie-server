@@ -29,6 +29,10 @@ const updateUser = (user) =>
         $set: user
     });
 
+const updateUserAsync = async (user) => {
+    await userModel.updateOne({_id: user._id}, {$set: user});
+}
+
 const updateBusinessData = (userId, businessData) => {
     return userModel.updateOne({_id: userId}, {$set: {businessData}})
 }
@@ -97,7 +101,7 @@ const deleteReviewOfUser = (userId, reviewId) => {
 module.exports = {
     findByUsername, findAllUsers, findUserById,
     findByUsernameAndPassword, findByRole, findUsersByRestaurant,
-    createUser, updateUser, deleteUser,
+    createUser, updateUser, deleteUser, updateUserAsync,
     addToFollowings, deleteFromFollowings, addToFollowers, deleteFromFollowers,
     updateBusinessData, deleteReviewOfUser
 };

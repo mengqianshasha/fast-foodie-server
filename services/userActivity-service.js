@@ -6,33 +6,9 @@ const moment = require('moment')
 module.exports = (app) => {
     const axios = require('axios');
 
-    const findActivityDetail = async (activities, newFetchedActivities) => {
+    const findActivityDetail = async (newFetchedActivities) => {
 
-        let updatedRecentActs;
-        // if the session doesn't have detail information
-        if (activities.length === 0 || !activities[0] ||
-            (!activities[0]['reviewDetail']
-             && !activities[0]['followDetail'])
-        ) {
-            updatedRecentActs = newFetchedActivities.map(act => act['_doc']);
-        }
-
-        // Combine new fetched activities with previous activities
-        else {
-            const currentActivitiesId = activities.map(act => act['_id'].toString());
-            let actualNewActivities = newFetchedActivities.filter(newAct =>
-                                                                        !currentActivitiesId.includes(
-                                                                            newAct['_doc']['_id'].toString()));
-            /*console.log("Filtered new acts: ");
-            console.log(actualNewActivities);*/
-
-            actualNewActivities = actualNewActivities.map(act => act['_doc']);
-            let updatedActivities = [...actualNewActivities, ...activities];
-            updatedRecentActs = updatedActivities.length > 10 ? updatedActivities.slice(0, 10) : updatedActivities;
-
-            /*console.log("Actual new acts to find details: ");
-            console.log(updatedRecentActs);*/
-        }
+        let updatedRecentActs = newFetchedActivities.map(act => act['_doc']);
 
         // Add detail information into each activity
         let newActivities = [];
@@ -62,23 +38,6 @@ module.exports = (app) => {
                     console.log(e)
                 }
 
-                // Retrieve restaurant data of this review
-                try {
-                    const restaurantId = reviewDetail['restaurant'];
-                    const business = await axios.get(
-                        `http://api.yelp.com/v3/businesses/${restaurantId}`, {
-                            headers: {
-                                "Authorization": `Bearer ${process.env.YELP_API_KEY}`
-                            }
-                        })
-                    reviewDetail = {
-                        ...reviewDetail,
-                        "restaurantDetail": {...business.data}
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-
                 activityDetail = {
                     ...activityDetail,
                     "reviewDetail": reviewDetail
@@ -103,6 +62,7 @@ module.exports = (app) => {
                     "followDetail": followee
                 }
             }
+
             /*****************************Reply Review Activity******************************/
             else if (activity.type === "reply-review") {
                 // If this activity already has detail, jump to next activity
@@ -151,10 +111,7 @@ module.exports = (app) => {
 
     const userActivities = (req, res) => {
         let user = req.session['profile']
-        let activities = req.session['userActivities'];
-
-
-        if (!user || !activities) {
+        if (!user) {
             res.json([]);
         }
 
@@ -163,36 +120,22 @@ module.exports = (app) => {
                  //console.log(newFetchedActivities);
 
                 // if newFetched activities are empty, do nothing and return the session
-                if (newFetchedActivities.length === 0) {
+                if (!newFetchedActivities || newFetchedActivities.length === 0) {
                     //console.log("return early because nothing new fetched");
-                    res.json(activities);
+                    res.json([]);
                     return;
                 }
-
-                // if newFetched is the same as the one in session, and the session has detail information
-                // Do nothing and return the session
-                if (activities !== undefined && activities.length !== 0 && activities[0]
-                    && activities[0]['_id'].toString() === newFetchedActivities[0]['_id'].toString()
-                    && (activities[0]['reviewDetail'] || activities[0]['followDetail'])) {
-
-                    //console.log("return early because nothing changed");
-                    res.json(activities);
-                    return;
-                }
-
                 let newFetchedRecentActs = newFetchedActivities.length > 10 ?
                                            newFetchedActivities.slice(0, 10) : newFetchedActivities;
 
-                findActivityDetail(activities, newFetchedRecentActs)
+                findActivityDetail(newFetchedRecentActs)
                     .then(newActsDetail => {
                         //console.log(newActsDetail);
-
-                        // Update the session with the new activitiesDetail
-                        req.session['userActivities'] = newActsDetail;
                         res.json(newActsDetail);
                     })
             })
     }
+
 
     const createActivity = (req, res) => {
         const newActivity = {

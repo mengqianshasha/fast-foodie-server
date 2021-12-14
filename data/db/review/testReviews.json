@@ -12,7 +12,10 @@
     "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
     "restaurantInfo": {
       "name": "Shake Shack",
-      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg"
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+      "price": "$$",
+      "categories": "American (Traditional), Ice Cream & Frozen Yogurt",
+      "location": "1 Old Fulton St, Brooklyn, NY 11201"
     },
     "time_created": "2021-11-28 10:08:21",
     "rating": 4.0,
@@ -44,7 +47,10 @@
     "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
     "restaurantInfo": {
       "name": "Shake Shack",
-      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg"
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+      "price": "$$",
+      "categories": "American (Traditional), Ice Cream & Frozen Yogurt",
+      "location": "1 Old Fulton St, Brooklyn, NY 11201"
     },
     "time_created": "2021-12-09 10:08:21",
     "rating": 4.0,
@@ -83,7 +89,10 @@
     "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
     "restaurantInfo": {
       "name": "Shake Shack",
-      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg"
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+      "price": "$$",
+      "categories": "American (Traditional), Ice Cream & Frozen Yogurt",
+      "location": "1 Old Fulton St, Brooklyn, NY 11201"
     },
     "time_created": "2021-12-09 22:08:21",
     "rating": 4.0,

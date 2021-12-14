@@ -4,7 +4,16 @@
     "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
     "time_created": "2021-10-01 22:08:21",
     "file_url": "http://www.africau.edu/images/default/sample.pdf",
-    "status": "declined"
+    "status": "declined",
+    "restaurantName" : "Shake Shack",
+    "userName" : "Monica Galler",
+    "restaurantInfo": {
+      "name": "Shake Shack",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+      "price": "$$",
+      "categories": "American (Traditional), Ice Cream & Frozen Yogurt",
+      "location": "1 Old Fulton St, Brooklyn, NY 11201"
+    }
   },
 
   {
@@ -12,7 +21,16 @@
     "restaurant": "Rv4NgRl-wkMNPNdqXNSGBg",
     "time_created": "2021-11-01 22:08:21",
     "file_url": "http://www.africau.edu/images/default/sample.pdf",
-    "status": "accepted"
+    "status": "accepted",
+    "restaurantName" : "Shake Shack",
+    "userName" : "Monica Galler",
+    "restaurantInfo": {
+      "name": "Shake Shack",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/fKBAzgXfwErkCiX2l46ruQ/o.jpg",
+      "price": "$$",
+      "categories": "American (Traditional), Ice Cream & Frozen Yogurt",
+      "location": "1 Old Fulton St, Brooklyn, NY 11201"
+    }
   },
 
   {
@@ -20,7 +38,16 @@
     "restaurant": "V7lXZKBDzScDeGB8JmnzSA",
     "time_created": "2021-12-01 22:08:21",
     "file_url": "http://www.africau.edu/images/default/sample.pdf",
-    "status": "unprocessed"
+    "status": "unprocessed",
+    "restaurantName" : "Katz's Delicatessen",
+    "userName" : "Charlie C",
+    "restaurantInfo": {
+      "name": "Katz's Delicatessen",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/7Yn37rOW4VQDI396jPPoyA/o.jpg",
+      "price": "$$",
+      "categories": "Delis, Sandwiches, Soup",
+      "location": "205 E Houston St, New York, NY 10002"
+    }
   },
 
   {
@@ -28,7 +55,16 @@
     "restaurant": "xEnNFXtMLDF5kZDxfaCJgA",
     "time_created": "2021-12-09 22:08:21",
     "file_url": "http://www.africau.edu/images/default/sample.pdf",
-    "status": "unprocessed"
+    "status": "unprocessed",
+    "restaurantName" : "The Halal Guys",
+    "userName" : "Duke DD",
+    "restaurantInfo": {
+      "name": "The Halal Guys",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/pqcdqGpzyurT2pSVA9G2kw/o.jpg",
+      "price": "$",
+      "categories": "Food Stands, Middle Eastern, Halal",
+      "location": "W 53rd St, New York, NY 10019"
+    }
   },
 
   {
@@ -36,7 +72,16 @@
     "restaurant": "jjJc_CrkB2HodEinB6cWww",
     "time_created": "2021-12-10 12:08:21",
     "file_url": "http://www.africau.edu/images/default/sample.pdf",
-    "status": "unprocessed"
+    "status": "unprocessed",
+    "restaurantName" : "LoveMama",
+    "userName" : "Duke DD",
+    "restaurantInfo": {
+      "name": "LoveMama",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/bLlFKTlVuLfmF-lIDGIjZA/o.jpg",
+      "price": "$$",
+      "categories": "Thai, Malaysian, Vietnamese",
+      "location": "174 2nd Ave, New York, NY 10003"
+    }
   }
 
 ]

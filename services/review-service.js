@@ -69,14 +69,12 @@ module.exports = (app) => {
     }
 
     const deleteProfileReview = async (review) => {
-        /*console.log("This is the deleted review");
-        console.log(review);*/
-
+        console.log("This is the deleted review");
+        console.log(review);
         let user = {};
         const findUser = userDao.findUserById(review['user'])
             .then(res => {
                 user = res;
-
                 /*console.log("This is the user deleting their review");
                 console.log(user);*/
             })
@@ -84,77 +82,40 @@ module.exports = (app) => {
         user.customerData.reviews =
             user.customerData.reviews.filter(id => id !== review._id.toString())
 
-        /*console.log("This is the user deleting reviewId from their list");
-        console.log(user);*/
+        console.log("This is the user deleting reviewId from their list");
+        console.log(user);
 
         return user;
-    }
-
-    const deleteActivitySessionReview = async (reviewId, activities) => {
-        return activities.filter(act => (act.review && act.review !== reviewId) ||
-                                        (act.replyReview && act.replyReview !== reviewId) ||
-                                        (!act.review && !act.replyReview));
-    }
-
-    const deleteNotificationSessionReview = async (reviewId, notifications) => {
-        return notifications.filter(notif => (notif.review && notif.review !== reviewId) ||
-                                             !notif.review);
     }
 
     const deleteReview = (req, res) => {
         const reviewId = req.params.reviewId;
         reviewDao.findReviewById(reviewId)
-            .then(review =>
-                      deleteProfileReview(review)
-                          .then(user => {
-                              /****************Update Profile Session***************/
-                              req.session['profile'] = user;
-                              req.session.save();
-                              userDao.updateUser(user)
-                                  .then(status => {
-                                      console.log("user updated");
-
-                                      /********Update Activities and Notifications Session*********/
-                                      let activitySession = req.session['userActivities'];
-                                      let newActivitySession;
-                                      deleteActivitySessionReview(reviewId, activitySession)
-                                              .then(res => newActivitySession = res);
-                                      req.session['userActivities'] = newActivitySession;
-                                      req.session.save();
-
-                                      let notificationSession = req.session['userNotifications'];
-                                      let newNotificationSession;
-                                      deleteNotificationSessionReview(reviewId,
-                                                                      notificationSession)
-                                           .then(res => newNotificationSession = res);
-                                      console.log("After deleting review, this is the new notification session");
-                                      console.log(newNotificationSession);
-                                      req.session['userNotifications'] = newNotificationSession;
-                                      req.session.save();
-                                  })
-                          })
-            )
-        reviewDao.deleteReview(reviewId)
-            .then(status => res.send(status));
+            .then(review => {
+                const reviewId = review._id.toString();
+                const currentUser = req.session['profile'];
+                let newUserReviews = currentUser.customerData.reviews.filter(
+                    review => review !== reviewId);
+                let newUser = {
+                    ...currentUser,
+                    "customerData": {
+                        ...currentUser.customerData,
+                        "reviews": newUserReviews
+                    }
+                };
+                userDao.updateUserAsync(newUser)
+                    .then(r => {
+                              req.session['profile'] = newUser;
+                              reviewDao.deleteReview(reviewId)
+                                  .then(status => res.send(status));
+                          }
+                    )
+            });
     }
 
     const saveReview = (req, res) => {
         reviewDao.updateReview(req.params.reviewId, req.body)
             .then(status => {
-
-                /***********Update Activity session***********/
-                let currentActSession = req.session['userActivities'];
-                const currentReviewAct = currentActSession.find(act => act.review === req.params.reviewId);
-                const idx = currentActSession.findIndex(act => act.review === req.params.reviewId);
-                const newReviewAct = {
-                    ...currentReviewAct,
-                    "reviewDetail": {
-                        ...currentReviewAct.reviewDetail,
-                        "text": req.body.text
-                    }
-                };
-                req.session['userActivities'][idx] = newReviewAct;
-
                 res.send(status);
             })
     }
@@ -168,18 +129,15 @@ module.exports = (app) => {
                 res.send(status);
             });
 
-        /*if (currentReview.replies.length !== 0 || currentReview.replies[0]['user'] !== "") {*/
-            const activity = {
-                user: newReview.replies[0].user,
-                type: "reply-review",
-                time_created: newReview.time_created,
-                replyReview: newReview._id.toString()
-            }
-            activityDao.createActivityAsync(activity)
-                .then(r => console.log("Reply activity created!"));
-        /*}*/
-
-
+        /************create a reply activity*************************/
+        const activity = {
+            user: newReview.replies[0].user,
+            type: "reply-review",
+            time_created: newReview.time_created,
+            replyReview: newReview._id.toString()
+        }
+        activityDao.createActivityAsync(activity)
+            .then(r => console.log("Reply activity created!"));
     }
 
     const findAllReviewsByIdsAsync = async (reviewsId, userId) => {
@@ -197,22 +155,6 @@ module.exports = (app) => {
             } catch (e) {
                 console.log(e)
             }
-            // Retrieve restaurant data of this review
-            try {
-                const restaurantId = reviewInfo['restaurant'];
-                const business = await axios.get(
-                    `http://api.yelp.com/v3/businesses/${restaurantId}`, {
-                        headers: {
-                            "Authorization": `Bearer ${process.env.YELP_API_KEY}`
-                        }
-                    })
-                reviewInfo = {
-                    ...reviewInfo,
-                    "restaurantDetail": {...business.data}
-                }
-            } catch (e) {
-                console.log(e);
-            }
             reviewsInfo.push(reviewInfo);
         }
         return reviewsInfo;
@@ -223,7 +165,7 @@ module.exports = (app) => {
             const userId = req.session['profile']._id;
             const reviewsId = req.session['profile']['customerData']['reviews'];
             /*console.log(reviewsId);*/
-            findAllReviewsByIdsAsync(reviewsId, userId)
+            findAllReviewsByIdsAsync(reviewsId.reverse(), userId)
                 .then(reviewsInfo => {
                     /*console.log(reviewsInfo);*/
                     res.json(reviewsInfo);
@@ -238,7 +180,7 @@ module.exports = (app) => {
         const userId = req.params.userId;
         userDao.findUserById(userId)
             .then(user => {
-                findAllReviewsByIdsAsync(user.customerData.reviews, userId)
+                findAllReviewsByIdsAsync(user.customerData.reviews.reverse(), userId)
                     .then(reviewsInfo => {
                         /*console.log(reviewsInfo);*/
                         res.json(reviewsInfo);

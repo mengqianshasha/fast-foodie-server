@@ -23,6 +23,9 @@ const reviewSchema = mongoose.Schema({
                                          restaurantInfo: {
                                              name: String,
                                              image_url: String,
+                                             price: String,
+                                             categories: String,
+                                             location: String
                                          },
                                          replies: [{
                                              user: String,
