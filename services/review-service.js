@@ -7,11 +7,9 @@ const {findUsersByRestaurant} = require("../data/db/user/user-dao");
 const {createNotification} = require("../data/db/notification/notification-dao");
 
 module.exports = (app) => {
-    const axios = require('axios');
 
     const findAllReviews = (req, res) => {
         const restaurantId = req.params.restaurantId;
-        //console.log(restaurantId);
         return reviewDao.findByRestaurantIdFromNewest(restaurantId)
             .then(reviews => {
                 //console.log(reviews);

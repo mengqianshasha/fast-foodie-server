@@ -70,6 +70,7 @@ module.exports = (app) => {
             await findRestaurant;
             result.push({
                 type: "review",
+                time_created: review.time_created,
                 user: {
                     _id: user['_id'],
                     name: user['firstName'] + ' ' + user['lastName'],
