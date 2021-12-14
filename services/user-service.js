@@ -162,7 +162,7 @@ module.exports = (app) => {
                         } else {
                             req.session['profile'] = profile;
 
-                            /*console.log("Final profile");
+                           /* console.log("Final profile");
                             console.log(profile);*/
 
                             res.json(profile);

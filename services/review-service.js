@@ -11,10 +11,10 @@ module.exports = (app) => {
 
     const findAllReviews = (req, res) => {
         const restaurantId = req.params.restaurantId;
-        /*console.log(restaurantId);*/
+        //console.log(restaurantId);
         return reviewDao.findByRestaurantIdFromNewest(restaurantId)
             .then(reviews => {
-                /*console.log(reviews);*/
+                //console.log(reviews);
                 res.json(reviews);
             });
     }

@@ -9,6 +9,8 @@ const {
 const {updateBusinessData, findUsersByRestaurant} = require("../data/db/user/user-dao");
 const {createNotification} = require("../data/db/notification/notification-dao");
 const {getYelpDetail} = require("../data/api/yelp-api");
+const {ADMIN_ID_FANGYING} = require("../CONSTS");
+
 module.exports = (app) => {
 
     const claimBusiness = (req, res) => {
@@ -26,15 +28,14 @@ module.exports = (app) => {
                         name: restaurant.name,
                         image_url: restaurant.image_url,
                         price: restaurant.price,
-                        categories: restaurant.categories.map(category => category.title)
-                            .reduce((prev, curr) => [prev, ', ', curr]).join(''),
+                        categories: restaurant.categories.map(category => category.title).join(', '),
                         location: restaurant.location['display_address'].map(addr => addr).join(', ')
                     }
                 }
                 createClaim(newClaim)
                     .then(response => {
                         createNotification({
-                            user: "61b27099141351ab03bf256a",
+                            user: ADMIN_ID_FANGYING,
                             type: "new-claim",
                             time_created: claim.time_created,
                             claim: response._id
