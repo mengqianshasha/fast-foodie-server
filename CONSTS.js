@@ -5,7 +5,8 @@ const MONGODB_URL = 'mongodb+srv://fast-foodie:fast-foodie@cluster0.07hvq.mongod
 // const MONGODB_URL = 'mongodb://localhost:27017/foodie';
 
 // const ADMIN_ID_FANGYING = "61b369cdce57907b9a43eb34";
-const ADMIN_ID_FANGYING = "61b27099141351ab03bf256a";
+// const ADMIN_ID_FANGYING = "61b27099141351ab03bf256a";
+const ADMIN_ID_FANGYING = "61b64282b4264c38ada29978";
 
 module.exports = {
     CLIENT_URL, MONGODB_URL, ADMIN_ID_FANGYING
