@@ -7,6 +7,16 @@ const findUserById = (userId) => {
     return userModel.findById(userId);
 }
 
+const findUserFollowersByIdAsync = async (userId) => {
+    let followers = [];
+    const findById = userModel.findById(userId)
+        .then(user => {
+            followers = user.customerData.followers;
+        });
+    await findById;
+    return followers;
+}
+
 const findByUsernameAndPassword = ({username, password}) => {
     return userModel.findOne({username, password});
 }
@@ -50,6 +60,8 @@ const addToFollowings = (userId, userIdToAdd) => {
             }
         })
 }
+
+
 
 const deleteFromFollowings = (userId, userIdToDelete) => {
     return userModel.findOne({"_id": userId})
@@ -99,7 +111,7 @@ const deleteReviewOfUser = (userId, reviewId) => {
 }
 
 module.exports = {
-    findByUsername, findAllUsers, findUserById,
+    findByUsername, findAllUsers, findUserById, findUserFollowersByIdAsync,
     findByUsernameAndPassword, findByRole, findUsersByRestaurant,
     createUser, updateUser, deleteUser, updateUserAsync,
     addToFollowings, deleteFromFollowings, addToFollowers, deleteFromFollowers,

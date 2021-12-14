@@ -52,8 +52,6 @@ module.exports = (app) => {
         }
     };
 
-
-
     const login = (req, res) => {
         userDao.findByUsernameAndPassword(req.body)
             .then(user => {
@@ -105,42 +103,73 @@ module.exports = (app) => {
 
     const profile = (req, res) => {
         let profile = req.session['profile'];
+        /*console.log("Initial profile");
+        console.log(profile);*/
 
-        /**********************************Business owner*********************************/
-        if (profile !== undefined && profile.role === "business") {
-            // If restaurant already stored in session, or user is unverified
-            if (profile.businessData.restaurant.name || !profile.businessData.verified) {
-                res.json(profile);
-            }
-            // If first query business profile, fetch the restaurant JSON
-            else {
-                const restaurantId = profile.businessData.restaurant;
-                getYelpDetail(restaurantId).then(business => {
-                    profile = {
-                        ...profile,
-                        "businessData": {
-                            ...profile.businessData,
-                            "restaurant": {...business.data}
+        let currentFollowers = [];
+        if (profile) {
+            currentFollowers = profile.customerData.followers;
+            /*console.log("This is current followers list");
+            console.log(currentFollowers);*/
+
+            /**********************************Check followers update*********************************/
+            userDao.findUserById(profile._id.toString())
+                .then(
+                    user => {
+                        let followers = user.customerData.followers;
+                        /*console.log("This is newer followers list");
+                        console.log(followers);*/
+
+                        if (followers && followers[followers.length - 1] !==
+                            currentFollowers[currentFollowers.length - 1]) {
+                            profile = {
+                                ...profile,
+                                "customerData": {
+                                    ...profile.customerData,
+                                    "followers": followers
+                                }
+                            };
+                            /*console.log("After checking followers");
+                            console.log(profile);*/
                         }
-                    };
-                    req.session['profile'] = profile;
-                    res.json(profile);
-                }).catch(e => {
-                    log_axios_error(e);
-                    profile = {
-                        ...profile,
-                        "businessData": {
-                            ...profile.businessData,
-                            "restaurant": {"id": restaurantId}
+
+
+                        /**********************************Business owner*********************************/
+                        if (profile !== undefined && profile.role === "business"
+                            && !profile.businessData.restaurant.name
+                            && profile.businessData.verified) {
+
+                            // If first query business profile as verified business user, fetch the
+                            // restaurant JSON
+                            const restaurantId = profile.businessData.restaurant;
+                            getYelpDetail(restaurantId).then(business => {
+                                profile = {
+                                    ...profile,
+                                    "businessData": {
+                                        ...profile.businessData,
+                                        "restaurant": {...business.data}
+                                    }
+                                };
+
+                                /*console.log("Final profile");
+                                console.log(profile);*/
+
+                                req.session['profile'] = profile;
+                                res.json(profile);
+                            }).catch(e => {
+                                console.log(e)
+                            });
+                        } else {
+                            req.session['profile'] = profile;
+
+                            /*console.log("Final profile");
+                            console.log(profile);*/
+
+                            res.json(profile);
                         }
-                    };
-                    req.session['profile'] = profile;
-                    res.json(profile);
-                })
-            }
-        }
-        /**********************************Other User*********************************/
-        else {
+                    }
+                )
+        } else {
             res.json(profile);
         }
     }
