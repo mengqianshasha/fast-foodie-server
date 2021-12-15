@@ -13,5 +13,5 @@ Please see the client end of this project on [Github](https://github.com/mengqia
 
 ### Contributors
 - Qiansha Meng
-- Ying Fang
+- FangYing Li
 - Zihan Wang
