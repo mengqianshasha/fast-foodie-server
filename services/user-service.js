@@ -250,7 +250,7 @@ module.exports = (app) => {
     const findFollowings = (req, res) => {
         const followingsId = req.session['profile']['customerData']['followings'];
         /*console.log(followingsId);*/
-        findUserByIdAsync(followingsId)
+        findUserByIdAsync(followingsId.reverse())
             .then(followingsInfo => {
                 /*console.log(followingsInfo);*/
                 res.json(followingsInfo);
@@ -260,7 +260,7 @@ module.exports = (app) => {
     const findFollowers = (req, res) => {
         const followersId = req.session['profile']['customerData']['followers'];
         /*console.log(followersId);*/
-        findUserByIdAsync(followersId)
+        findUserByIdAsync(followersId.reverse())
             .then(followersInfo => {
                 /*console.log(followersInfo);*/
                 res.json(followersInfo);
